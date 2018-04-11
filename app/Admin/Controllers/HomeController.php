@@ -3,7 +3,6 @@
 namespace App\Admin\Controllers;
 
 use App\Http\Controllers\Controller;
-use Encore\Admin\Controllers\Dashboard;
 use Encore\Admin\Facades\Admin;
 use Encore\Admin\Form\Field\Map;
 use Encore\Admin\Layout\Column;
@@ -42,7 +41,7 @@ class HomeController extends Controller
                 $content->header('Dashboard');
                 $content->description("Have a look at things that are currently happening");
                 $content->row(Dashboard::title());
-
+                $content->row((new Dashboard())->google_analystics());
             });
         }
         return $v;
