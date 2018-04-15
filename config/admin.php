@@ -106,6 +106,15 @@ return [
         'role_users_table'       => 'admin_role_users',
         'role_permissions_table' => 'admin_role_permissions',
         'role_menu_table'        => 'admin_role_menu',
+
+        // Templates & views table and model.
+        'templates_table' => 'site_templates',
+        'site_menu_table' => 'site_menu_tables',
+
+        // Menu table and model.
+        'pages_table' => 'site_pages',
+        'pages_model' => App\Admin\Databases\Website\Pages::class,
+
     ],
 
     /*

@@ -47,7 +47,6 @@ class CreateAdminTables extends Migration
             $table->string('title', 50);
             $table->string('icon', 50);
             $table->string('uri', 50)->nullable();
-
             $table->timestamps();
         });
 
@@ -89,6 +88,10 @@ class CreateAdminTables extends Migration
             $table->index('user_id');
             $table->timestamps();
         });
+
+
+
+
     }
 
     /**
