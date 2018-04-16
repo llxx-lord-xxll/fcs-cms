@@ -15,5 +15,9 @@ Route::group([
     'middleware'    => config('admin.route.middleware'),
 ], function (Router $router) {
     $router->get('/dashboard', 'HomeController@index');
-    $router->resource('/menu', 'Website\MenuController', ['except' => ['create']]);
+    $router->group(['prefix' => 'appearance'],function (Router $router)
+    {
+        $router->resource('/menu', 'Website\MenuController', ['except' => ['create']]);
+        $router->resource('/widgets', 'Website\WidgetController');
+    });
 });

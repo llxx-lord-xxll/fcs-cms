@@ -109,6 +109,8 @@ return [
 
         // Templates & views table and model.
         'templates_table' => 'site_templates',
+        'site_widgets_table' => 'site_widgets',
+        'site_widget_entries' => 'site_widget_entries',
         'site_menu_table' => 'site_menu_tables',
 
         // Menu table and model.
@@ -160,6 +162,10 @@ return [
      * Settings for extensions.
      */
     'extensions' => [
+        'media-manager' => [
 
+            // Select a local disk that you configured in `config/filesystem.php`
+            'disk' => 'public'
+        ],
     ],
 ];

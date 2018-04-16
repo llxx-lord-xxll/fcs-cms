@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "3ac874dd53943909b7de11c23da290fe",
+    "content-hash": "2257f9928aa5dc08793885b8c48b1020",
     "packages": [
         {
             "name": "dnoegel/php-xdg-base-dir",
@@ -834,6 +834,115 @@
                 }
             ],
             "time": "2015-04-20T18:58:01+00:00"
+        },
+        {
+            "name": "laravel-admin-ext/helpers",
+            "version": "v1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/laravel-admin-extensions/helpers.git",
+                "reference": "17053511d502c490a37641a91a223536db3d4bdb"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/laravel-admin-extensions/helpers/zipball/17053511d502c490a37641a91a223536db3d4bdb",
+                "reference": "17053511d502c490a37641a91a223536db3d4bdb",
+                "shasum": ""
+            },
+            "require": {
+                "encore/laravel-admin": "1.5.*",
+                "laravel/framework": "5.5.*",
+                "php": ">=7.0.0"
+            },
+            "require-dev": {
+                "laravel/laravel": "5.5.*",
+                "phpunit/phpunit": "~6.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Encore\\Admin\\Helpers\\HelpersServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Encore\\Admin\\Helpers\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "z-song",
+                    "email": "zosong@126.com"
+                }
+            ],
+            "description": "Helpers extension for laravel-admin",
+            "homepage": "https://github.com/laravel-admin-extensions/helpers",
+            "keywords": [
+                "helpers",
+                "laravel-admin"
+            ],
+            "time": "2017-09-05T08:38:56+00:00"
+        },
+        {
+            "name": "laravel-admin-ext/media-manager",
+            "version": "v1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/laravel-admin-extensions/media-manager.git",
+                "reference": "b7d1635fa151cb8cf73e6c9f5e5a12b876ad7e75"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/laravel-admin-extensions/media-manager/zipball/b7d1635fa151cb8cf73e6c9f5e5a12b876ad7e75",
+                "reference": "b7d1635fa151cb8cf73e6c9f5e5a12b876ad7e75",
+                "shasum": ""
+            },
+            "require": {
+                "encore/laravel-admin": "1.5.*",
+                "laravel/framework": "5.5.*",
+                "php": ">=7.0.0"
+            },
+            "require-dev": {
+                "laravel/laravel": "5.*",
+                "phpunit/phpunit": "~6.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Encore\\Admin\\Media\\MediaServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Encore\\Admin\\Media\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "z-song",
+                    "email": "zosong@126.com"
+                }
+            ],
+            "description": "Media manager for laravel",
+            "homepage": "https://github.com/laravel-admin-extensions/media-manager",
+            "keywords": [
+                "laravel-admin",
+                "manager",
+                "media"
+            ],
+            "time": "2017-08-09T09:06:25+00:00"
         },
         {
             "name": "laravel/framework",
