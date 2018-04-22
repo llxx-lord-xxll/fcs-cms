@@ -48,6 +48,11 @@ return [
             'root' => storage_path('app'),
         ],
 
+        'site_layout' => [
+            'driver' => 'local',
+            'root' => env('SITE_ROOT').'\\resources\\views\\layouts',
+        ],
+
         'public' => [
             'driver' => 'local',
             'root' => storage_path('app/public'),
