@@ -20,5 +20,6 @@ Route::group([
         $router->resource('/menu', 'Website\MenuController', ['except' => ['create']]);
         $router->resource('/widgets', 'Website\WidgetController');
         $router->resource('/layouts', 'Website\LayoutController');
+        $router->resource('/templates', 'Website\LayoutController');
     });
 });

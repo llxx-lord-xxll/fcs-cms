@@ -99,7 +99,7 @@ class LayoutController extends Controller
             $form->ignore('content');
 
 
-            $form->ckeditor('content')->default(function ($form) {
+            $form->aceditor('content')->default(function ($form) {
                 //$layout = Layouts::find($id);
                 if(Storage::disk("site_layout")->exists($form->model()->slug.".blade.php"))
                 {
