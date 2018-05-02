@@ -2,17 +2,18 @@
 
 namespace App\Admin\Controllers\Website;
 
-use App\Admin\Databases;
+use App\Admin\Databases\Website\Layouts;
+use App\Admin\Databases\Website\SiteTemplates;
 
-use App\Wid;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
 use Encore\Admin\Facades\Admin;
 use Encore\Admin\Layout\Content;
 use App\Http\Controllers\Controller;
 use Encore\Admin\Controllers\ModelForm;
+use Illuminate\Support\Facades\Auth;
 
-class WidgetController extends Controller
+class TemplatesController extends Controller
 {
     use ModelForm;
 
@@ -25,8 +26,9 @@ class WidgetController extends Controller
     {
         return Admin::content(function (Content $content) {
 
-            $content->header('Widgets');
-            $content->description('Manage your website widgets');
+            $content->header('Templates');
+            $content->description('Manage your templates');
+
             $content->body($this->grid());
         });
     }
@@ -41,8 +43,8 @@ class WidgetController extends Controller
     {
         return Admin::content(function (Content $content) use ($id) {
 
-            $content->header('Edit Widget');
-            $content->description('Edit your widget');
+            $content->header('Edit Templates');
+            $content->description('Edit your templates');
 
             $content->body($this->form()->edit($id));
         });
@@ -57,8 +59,8 @@ class WidgetController extends Controller
     {
         return Admin::content(function (Content $content) {
 
-            $content->header('Create widgets');
-            $content->description('Create your widgets');
+            $content->header('Create Template');
+            $content->description('Create the templates by just filling these data');
 
             $content->body($this->form());
         });
@@ -71,14 +73,15 @@ class WidgetController extends Controller
      */
     protected function grid()
     {
-        return Admin::grid(Databases\Website\Widgets::class, function (Grid $grid) {
+        return Admin::grid(SiteTemplates::class, function (Grid $grid) {
 
             $grid->id('ID')->sortable();
-            $grid->column("title");
-            $grid->column("slug");
-
+            $grid->column('title','Title');
+            $grid->column('layout_id','Layout');
+            $grid->column('slug');
+            $grid->column('author');
+            $grid->updated_at();
         });
-
     }
 
     /**
@@ -88,19 +91,15 @@ class WidgetController extends Controller
      */
     protected function form()
     {
+        return Admin::form(SiteTemplates::class, function (Form $form) {
 
-        return Admin::form(Databases\Website\Widgets::class, function (Form $form) {
             $form->display('id', 'ID');
             $form->text('title');
-            $form->text('slug')->placeholder("No space,only alphanum chars")->rules("required|regex:/^[A-Za-z_][A-Za-z\d_]*$/");
-            $form->hasMany("widget_entries",function (Form\NestedForm $form)
-            {
-                $form->hidden('entry_type','field')->value('');
-                $form->text("title","Caption");
-                //var_dump(Databases\Website\Widgets::selectOptions());
-                //var_dump(Databases\Website\WidgetEntries::selectOptions());
-                $form->select("field_type","Type")->options(Databases\Website\Widgets::selectOptions());
-            });
+            $form->text('slug');
+            $form->select('layout_id','Layout')->options(Layouts::selectOptions());
+            $form->hidden('author')->value(Admin::user()->getAuthIdentifier());
+            $form->display('created_at', 'Created At');
+            $form->display('updated_at', 'Updated At');
         });
     }
 }

@@ -23,13 +23,6 @@ class CreateSiteTables extends Migration
             $table->timestamps();
         });
 
-        Schema::connection($connection)->create(config('admin.database.templates_table'), function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('template_name');
-            $table->string('master_layout_slug');
-            $table->string('template_slug');
-            $table->string('widgets');
-        });
 
         Schema::connection($connection)->create(config('admin.database.site_widgets_table'), function (Blueprint $table) {
             $table->increments('id');
@@ -48,7 +41,6 @@ class CreateSiteTables extends Migration
     {
         $connection = config('admin.database.connection') ?: config('database.default');
         Schema::connection($connection)->dropIfExists(config('admin.database.site_menu_table'));
-        Schema::connection($connection)->dropIfExists(config('admin.database.templates_table'));
         Schema::connection($connection)->dropIfExists(config('admin.database.site_widgets_table'));
     }
 }
