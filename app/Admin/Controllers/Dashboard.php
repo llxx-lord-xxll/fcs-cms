@@ -46,9 +46,9 @@ class Dashboard
     public function google_analystics()
     {
         //retrieve sessions and pageviews with yearMonth dimension since 1 year ago
-        $analyticsData = Analytics::performQuery(Period::months(1),'ga:sessions',  ['sort'=>'-ga:sessions']);
+        $analyticsData = Analytics::fetchVisitorsAndPageViews(Period::months(1));
+        return view('admin.dashboard.analytics')->with('data',$analyticsData);
 
-        return collect($analyticsData)->pluck('sessions');
     }
 
     /**
