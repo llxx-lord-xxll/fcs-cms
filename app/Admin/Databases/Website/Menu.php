@@ -42,6 +42,8 @@ class Menu extends Model
         $this->setTable(config('admin.database.site_menu_table'));
 
         parent::__construct($attributes);
+
+        $this->setOrderColumn('order');
     }
 
     /**
@@ -59,7 +61,7 @@ class Menu extends Model
         $orderColumn = DB::getQueryGrammar()->wrap($this->orderColumn);
         $byOrder = $orderColumn.' = 0,'.$orderColumn;
 
-        return static::all()->toArray();
+        return static::orderByRaw($byOrder)->get()->toArray();
     }
 
     /**

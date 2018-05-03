@@ -16,8 +16,6 @@ use Illuminate\Support\Facades\DB;
  */
 class Widgets extends Model
 {
-
-
     /**
      * The attributes that are mass assignable.
      *

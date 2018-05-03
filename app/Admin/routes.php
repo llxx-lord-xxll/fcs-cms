@@ -21,5 +21,6 @@ Route::group([
         $router->resource('/widgets', 'Website\WidgetController');
         $router->resource('/layouts', 'Website\LayoutController');
         $router->resource('/templates', 'Website\TemplatesController');
+        $router->resource('/templates/{tid}/meta', 'Website\TemplatesMetaController');
     });
 });

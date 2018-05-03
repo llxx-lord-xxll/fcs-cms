@@ -5,6 +5,9 @@ namespace App\Admin\Controllers\Website;
 use App\Admin\Databases\Website\Layouts;
 use App\Admin\Databases\Website\SiteTemplates;
 
+use App\User;
+use Carbon\Carbon;
+use Encore\Admin\Auth\Database\Administrator;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
 use Encore\Admin\Facades\Admin;
@@ -75,12 +78,25 @@ class TemplatesController extends Controller
     {
         return Admin::grid(SiteTemplates::class, function (Grid $grid) {
 
-            $grid->id('ID')->sortable();
+
             $grid->column('title','Title');
-            $grid->column('layout_id','Layout');
+            $grid->column('layout_id','Layout')->display(function ($layout_id)
+            {
+               return "<a href='layouts/$layout_id/edit'>".Layouts::find($layout_id)->title."</a>" ;
+            });
             $grid->column('slug');
-            $grid->column('author');
-            $grid->updated_at();
+            $grid->column('author')->display(function ($author)
+            {
+                return Administrator::find($author)->name;
+            });
+            $grid->updated_at()->display(function ($updated_At){
+                return Carbon::parse($updated_At)->format("d M, Y");
+            });
+
+            $grid->actions(function (Grid\Displayers\Actions $actions)
+            {
+                $actions->prepend('<a href="templates/'.$actions->getKey().'/meta" title="Edit Widgets"> <span class="fa fa-gears" ></span> </a>');
+            });
         });
     }
 
@@ -96,7 +112,7 @@ class TemplatesController extends Controller
             $form->display('id', 'ID');
             $form->text('title');
             $form->text('slug');
-            $form->select('layout_id','Layout')->options(Layouts::selectOptions());
+            $form->select('layout_id','Layout')->options(Layouts::selectOptions())->default(Layouts::first()->id);
             $form->hidden('author')->value(Admin::user()->getAuthIdentifier());
             $form->display('created_at', 'Created At');
             $form->display('updated_at', 'Updated At');
