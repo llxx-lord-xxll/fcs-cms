@@ -53,6 +53,18 @@ return [
             'root' => env('SITE_ROOT').'\\resources\\views\\layouts',
         ],
 
+        'site_upload' => [
+            'driver' => 'local',
+            'root' => env('SITE_ROOT').'\\public\\uploads',
+            'visibility' => 'public',
+            'url'=>env('SITE_URL').'/uploads',
+        ],
+
+        'site_pages' => [
+            'driver' => 'local',
+            'root' => env('SITE_ROOT').'\\resources\\views',
+        ],
+
         'public' => [
             'driver' => 'local',
             'root' => storage_path('app/public'),

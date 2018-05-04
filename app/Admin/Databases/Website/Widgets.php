@@ -2,6 +2,7 @@
 
 namespace App\Admin\Databases\Website;
 
+use Encore\Admin\Form;
 use Encore\Admin\Traits\AdminBuilder;
 use Encore\Admin\Traits\ModelTree;
 use Illuminate\Database\Eloquent\Model;
@@ -72,7 +73,52 @@ class Widgets extends Model
         return $this->hasMany(WidgetEntries::class, 'widget_id');
     }
 
+    public static function form_widget_display(Form &$form,$id,$suffix)
+    {
+        $tmp = array();
+        $wid = Widgets::find($id);
+        $widentry = WidgetEntries::where('widget_id','=',$id);
 
 
+        if($widentry->first() != null)
+        {
+            $form->html('<h4/>'.$wid->title.'</h4>');
+            foreach ($widentry->get() as $row)
+            {
+                static::form_widget_display($form,$row->field_type,$suffix);
+            }
+        }
+        else
+        {
+            switch ($wid->slug)
+            {
+                case 'text':
+                    $form->text('cust_wid_'.$wid->slug.$suffix,$wid->title);
+                    $form->ignore('cust_wid_'.$wid->slug.$suffix);
+                    array_push($tmp,'cust_wid_'.$wid->slug.$suffix);
+                    break;
+                case 'image':
+                    $form->image('cust_wid_'.$wid->slug.$suffix,$wid->title);
+                    $form->ignore('cust_wid_'.$wid->slug.$suffix);
+                    array_push($tmp,'cust_wid_'.$wid->slug.$suffix);
+                    break;
+                case 'direct_html':
+                    $form->aceditor('cust_wid_'.$wid->slug.$suffix,$wid->title);
+                    $form->ignore('cust_wid_'.$wid->slug.$suffix);
+                    array_push($tmp,'cust_wid_'.$wid->slug.$suffix);
+                    break;
+                case 'richtext':
+                    $form->textarea('cust_wid_'.$wid->slug.$suffix,$wid->title);
+                    $form->ignore('cust_wid_'.$wid->slug.$suffix);
+                    array_push($tmp,'cust_wid_'.$wid->slug.$suffix);
+                    break;
+                case 'column':
+                    $form->textarea('cust_wid_'.$wid->slug.$suffix,$wid->title);
+                    $form->ignore('cust_wid_'.$wid->slug.$suffix);
+                    array_push($tmp,'cust_wid_'.$wid->slug.$suffix);
+                    break;
+            }
+        }
 
+    }
 }

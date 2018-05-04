@@ -56,17 +56,18 @@ class TemplatesMetaController extends Controller
 
             $content->header('Template Widget Editor');
             $content->description('Edit your template widget');
-            $content->body($this->form2()->edit($this->metum)->setAction(admin_base_path('appearance/templates/'.$this->metum.'/meta/'.$this->metum)));
+            $content->body($this->form2()->edit($this->metum)->setAction(admin_base_path('appearance/templates/'.$this->tid.'/meta/'.$this->metum)));
         });
     }
 
-
-    public function show($tid,$metum)
+    public function update($tid,$metum)
     {
         $this->tid = $tid;
         $this->metum = $metum;
-        return redirect()->route('meta.edit', ['metum' => $metum,'tid'=>$tid]);
+
+        return $this->form2()->update($this->metum);
     }
+
 
     public function destroy($tid,$metum)
     {
@@ -142,14 +143,10 @@ class TemplatesMetaController extends Controller
                 $form->text('meta_value','Value');
             });
 
-            $form->display('created_at', 'Created At');
-            $form->display('updated_at', 'Updated At');
+            $form->display('created_at', 'Created');
+            $form->display('updated_at', 'Updated');
 
-            $form->saving(function (Form $form) {
 
-                return redirect()->route('meta.show',['tid'=>$this->tid,'metum'=>$this->metum]);
-
-            });
         });
     }
 

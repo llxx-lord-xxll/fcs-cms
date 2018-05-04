@@ -113,9 +113,14 @@ class TemplatesController extends Controller
             $form->text('title');
             $form->text('slug');
             $form->select('layout_id','Layout')->options(Layouts::selectOptions())->default(Layouts::first()->id);
-            $form->hidden('author')->value(Admin::user()->getAuthIdentifier());
+            $form->hidden('author');
             $form->display('created_at', 'Created At');
             $form->display('updated_at', 'Updated At');
+
+            $form->saving(function (Form $form) {
+                $form->user_id = Admin::user()->getAuthIdentifier();
+            });
+
         });
     }
 }

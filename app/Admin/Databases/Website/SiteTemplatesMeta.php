@@ -33,8 +33,6 @@ class SiteTemplatesMeta extends Model
         $this->setTitleColumn('title');
     }
 
-
-
     public function templates_meta_values()
     {
         return $this->hasMany(SiteTemplateMetaValues::class, 'template_meta_id');
