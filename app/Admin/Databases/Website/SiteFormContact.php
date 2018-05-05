@@ -7,4 +7,5 @@ use Illuminate\Database\Eloquent\Model;
 class SiteFormContact extends Model
 {
     protected $table = 'form_contact';
+    public $timestamps = false;
 }

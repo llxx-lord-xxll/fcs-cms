@@ -10,6 +10,8 @@ use Encore\Admin\Facades\Admin;
 use Encore\Admin\Layout\Content;
 use App\Http\Controllers\Controller;
 use Encore\Admin\Controllers\ModelForm;
+use function foo\func;
+use Illuminate\Support\Facades\Mail;
 
 class ContactFormController extends Controller
 {
@@ -41,8 +43,8 @@ class ContactFormController extends Controller
     {
         return Admin::content(function (Content $content) use ($id) {
 
-            $content->header('header');
-            $content->description('description');
+            $content->header('Reply to the contact');
+            $content->description('Reply to the message sent by the visitor');
 
             $content->body($this->form()->edit($id));
         });
@@ -72,11 +74,28 @@ class ContactFormController extends Controller
     protected function grid()
     {
         return Admin::grid(SiteFormContact::class, function (Grid $grid) {
+            //$grid->seen();
+            $grid->model()->orderBy('created_at','desc');
+            $grid->column('name')->display(function ($name)
+            {
+                if ($this->seen == 0)
+                {
+                    return "<a href='".route('contact.edit',['contact'=>$this->id])."' class='text-primary' title='Not yet replied'>$name</a>";
+                }
+                else
+                {
+                    return $name;
+                }
+            });
+            $grid->columns(array('email'=>'Email','country'=>'From','mob'=>'Mobile','message'=>'Message'));
+            $grid->column('created_at','Time')->sortable();
+            $grid->actions(function (Grid\Displayers\Actions $actions)
+            {
+                $actions->disableEdit();
+                $actions->prepend('<a href="'.route('contact.edit',['contact'=>$actions->getKey()]).'"><i class="fa fa-reply"></i></a>');
+            });
+            $grid->disableCreateButton();
 
-            $grid->id('ID')->sortable();
-
-            $grid->created_at();
-            $grid->updated_at();
         });
     }
 
@@ -90,9 +109,33 @@ class ContactFormController extends Controller
         return Admin::form(SiteFormContact::class, function (Form $form) {
 
             $form->display('id', 'ID');
+            $form->display('name');
+            $form->display('message','Message sent by visitor');
+            $form->display('created_at', 'Sent at');
+            $form->display('email');
+            $form->display('mob','Mobile');
+            $form->divider();
+            $form->ckeditor('reply_msg','Your message')->placeholder('Send a reply message to the user');
+            $form->ignore('reply_msg');
+            $form->disableReset();
+            $form->disableSubmit();
+            $form->html('<button type="submit" class="btn btn-info pull-right" data-loading-text="<i class=\'fa fa-spinner fa-spin \'></i> Save"> <span class="fa fa-reply"></span> Reply</button>');
 
-            $form->display('created_at', 'Created At');
-            $form->display('updated_at', 'Updated At');
+
+            $form->saving(function (Form $form)
+            {
+                if (request('reply_msg') != null || empty(request('reply_msg')) == false)
+                {
+                    $data = ['email' => $form->model()->email,'name'=> $form->model()->name,'msg'=>$form->model()->message, 'reply_msg'=> request('reply_msg')];
+                    $form->model()->seen = 1;
+                    Mail::send('mails.mailTmp1', $data, function ($m) use ($data) {
+                        $m->from('community@futurecitysummit.org', 'Future City Summit');
+                        $m->replyTo('community@futurecitysummit.org', 'Future City Summit');
+                        $m->to($data['email'], $data['name'])->subject('Contact form submit reply | Future City Summit');
+                    });
+                }
+
+            });
         });
     }
 }

@@ -28,5 +28,5 @@ Route::group([
     $router->resource('/applications/delegates', 'Website\DelegatesFormController');
     $router->resource('/applications/chapter', 'Website\NewChapterFormController');
     $router->resource('/applications/recruitment', 'Website\ReqruitmentsFormController');
-    $router->resource('/contact', 'Website\ContactFormController');
+    $router->resource('/contact', 'Website\ContactFormController', ['except' => ['create']]);
 });
