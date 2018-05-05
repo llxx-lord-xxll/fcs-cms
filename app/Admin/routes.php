@@ -25,8 +25,8 @@ Route::group([
     });
     $router->resource('/pages', 'Website\PageController');
     $router->resource('/pages/{pid}/data', 'Website\PageDataController', ['except' => ['create']]);
-    $router->resource('/applications/delegates', 'Website\DelegatesFormController');
-    $router->resource('/applications/chapter', 'Website\NewChapterFormController');
-    $router->resource('/applications/recruitment', 'Website\ReqruitmentsFormController');
+    $router->resource('/applications/delegates', 'Website\DelegatesFormController',['except' => ['create']]);
+    $router->resource('/applications/chapter', 'Website\NewChapterFormController',['except' => ['create']]);
+    $router->resource('/applications/recruitment', 'Website\ReqruitmentsFormController',['except' => ['create']]);
     $router->resource('/contact', 'Website\ContactFormController', ['except' => ['create']]);
 });

@@ -7,4 +7,5 @@ use Illuminate\Database\Eloquent\Model;
 class SiteFormDelegates extends Model
 {
     protected $table = 'form_delegates';
+    public $timestamps = false;
 }
