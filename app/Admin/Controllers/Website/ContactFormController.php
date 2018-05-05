@@ -108,7 +108,6 @@ class ContactFormController extends Controller
     {
         return Admin::form(SiteFormContact::class, function (Form $form) {
 
-            $form->display('id', 'ID');
             $form->display('name');
             $form->display('message','Message sent by visitor');
             $form->display('created_at', 'Sent at');
