@@ -43,8 +43,8 @@ class DelegatesFormController extends Controller
     {
         return Admin::content(function (Content $content) use ($id) {
 
-            $content->header('header');
-            $content->description('description');
+            $content->header('Reply to the applicant');
+            $content->description('Respond to the application sent by the applicant');
 
             $content->body($this->form()->edit($id));
         });
