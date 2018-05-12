@@ -333,8 +333,6 @@ class DelegatesFormController extends Controller
             })->sortable();
 
             $grid->columns(array(
-                'first_name'=>'First Name',
-                'last_name'=>'Last Name',
                 'passport'=>'Passport #',
 
             ));
@@ -348,12 +346,10 @@ class DelegatesFormController extends Controller
                 'city'=>'City',
                 'occupation'=>'Occupation',
                 'university'=>'University',
+                'company'=>'Company',
                 'ministry'=>'Ministry',
                 'email'=>'Email',
                 'mob'=>'Mobile',
-                'facebook'=>'Facebook',
-                'linkedin'=>'LinkedIn',
-                'scholarhub'=>'ScholarHub',
                 ));
             $grid->column('pitching_deck')->display(function($portfolio)
             {
@@ -363,7 +359,7 @@ class DelegatesFormController extends Controller
               return '';
             });
 
-            $grid->column('created_at','Time')->sortable();
+            $grid->column('created_at','Time')->sortable()->style('width:150px');
             $grid->actions(function (Grid\Displayers\Actions $actions)
             {
                 $actions->disableEdit();
@@ -379,8 +375,6 @@ class DelegatesFormController extends Controller
                 // Add a column filter
                 $filter->in('nationality', 'Country')->multipleSelect($countries);
                 $filter->like('title');
-                $filter->like('first_name');
-                $filter->like('last_name');
                 $filter->like('preferred_name');
                 $filter->like('city');
                 $filter->like('passport');

@@ -18,7 +18,6 @@ class Layouts extends Model
         {
             $tmp[$row->id] = $row->title;
         }
-
         return $tmp;
     }
 }

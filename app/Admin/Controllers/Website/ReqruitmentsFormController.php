@@ -341,18 +341,23 @@ class ReqruitmentsFormController extends Controller
             $grid->columns(array(
                 'occupation'=>'Occupation',
                 'university'=>'University',
+                'company'=>'Company',
                 'ministry'=>'Ministry',
                 'email'=>'Email',
                 'mob'=>'Mobile',
-                'facebook'=>'Facebook',
-                'linkedin'=>'LinkedIn',
-                'scholarhub'=>'ScholarHub',
             ));
 
             $grid->column('pitching_deck')->display(function($portfolio)
             {
                 if($portfolio != null){
                     return "<a href='".Storage::disk('site_upload')->url('pitching-deck/'.$portfolio)."'>Download</a>";
+                }
+                return '';
+            });
+            $grid->column('resume')->display(function($portfolio)
+            {
+                if($portfolio != null){
+                    return "<a href='".Storage::disk('site_upload')->url('resume/'.$portfolio)."'>Download</a>";
                 }
                 return '';
             });
