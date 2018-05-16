@@ -36,9 +36,9 @@ class TemplatesMetaController extends Controller
             $content->description("Organize your widgets in the template");
 
             $content->row(function (Row $row){
-                $row->column(6, $this->treeView()->render());
+                $row->column(6, (new Box('',$this->treeView()->render()))->style(''));
 
-                $row->column(6, new Box('',$this->form()->setAction(admin_base_path('appearance/templates/'.$this->tid.'/meta'))));
+                $row->column(6, $this->form()->setAction(admin_base_path('appearance/templates/'.$this->tid.'/meta')));
             });
         });
     }
