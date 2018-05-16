@@ -141,7 +141,7 @@ class TemplatesMetaController extends Controller
             $form->select('parent_id','Parent Widget')->options(SiteTemplatesMeta::selectedOptions2($this->tid));
             $form->select('widgets_id','Widget')->options(Widgets::selectOptions())->default(key(Widgets::selectOptions()));
             $form->hasMany('templates_meta_values','Widget Properties',function (Form\NestedForm $form){
-                $form->select('meta_key','Property Name')->options(array('Height','Width'));
+                $form->select('meta_key','Property Name')->options(array('style'=>'Style','innserstyle'=>'InnerStyle','class'=>'Class','innerclass'=>'InnerClass'));
                 $form->text('meta_value','Value');
             });
 
