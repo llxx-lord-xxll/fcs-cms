@@ -38,10 +38,7 @@ class TemplatesMetaController extends Controller
             $content->row(function (Row $row){
                 $row->column(6, $this->treeView()->render());
 
-                $row->column(6, new Box(function (Box $box){
-                    $box->title('');
-                   $box->content( $this->form()->setAction(admin_base_path('appearance/templates/'.$this->tid.'/meta')));
-                }));
+                $row->column(6, new Box('',$this->form()->setAction(admin_base_path('appearance/templates/'.$this->tid.'/meta'))));
             });
         });
     }
