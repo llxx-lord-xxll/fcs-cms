@@ -223,12 +223,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/z-song/laravel-admin.git",
-                "reference": "8993062f98efbb232dc099ab9503ab0301780f01"
+                "reference": "f2450dd53b8e36752d65a8a5812cfd35d7ce467e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/z-song/laravel-admin/zipball/8993062f98efbb232dc099ab9503ab0301780f01",
-                "reference": "8993062f98efbb232dc099ab9503ab0301780f01",
+                "url": "https://api.github.com/repos/z-song/laravel-admin/zipball/f2450dd53b8e36752d65a8a5812cfd35d7ce467e",
+                "reference": "f2450dd53b8e36752d65a8a5812cfd35d7ce467e",
                 "shasum": ""
             },
             "require": {
@@ -285,7 +285,7 @@
                 "grid",
                 "laravel"
             ],
-            "time": "2018-05-04T02:35:38+00:00"
+            "time": "2018-05-06T10:10:03+00:00"
         },
         {
             "name": "erusev/parsedown",
@@ -494,16 +494,16 @@
         },
         {
             "name": "google/apiclient-services",
-            "version": "v0.57",
+            "version": "v0.58",
             "source": {
                 "type": "git",
                 "url": "https://github.com/google/google-api-php-client-services.git",
-                "reference": "fc1821419f0e9d060d83a2864e2a40874b91430d"
+                "reference": "e21760a34daea7bc29e2866b62f8c8db4e91228d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/google/google-api-php-client-services/zipball/fc1821419f0e9d060d83a2864e2a40874b91430d",
-                "reference": "fc1821419f0e9d060d83a2864e2a40874b91430d",
+                "url": "https://api.github.com/repos/google/google-api-php-client-services/zipball/e21760a34daea7bc29e2866b62f8c8db4e91228d",
+                "reference": "e21760a34daea7bc29e2866b62f8c8db4e91228d",
                 "shasum": ""
             },
             "require": {
@@ -527,7 +527,7 @@
             "keywords": [
                 "google"
             ],
-            "time": "2018-04-28T00:23:39+00:00"
+            "time": "2018-05-06T00:22:52+00:00"
         },
         {
             "name": "google/auth",
@@ -1252,16 +1252,16 @@
         },
         {
             "name": "league/flysystem",
-            "version": "1.0.44",
+            "version": "1.0.45",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/flysystem.git",
-                "reference": "168dbe519737221dc87d17385cde33073881fd02"
+                "reference": "a99f94e63b512d75f851b181afcdf0ee9ebef7e6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/168dbe519737221dc87d17385cde33073881fd02",
-                "reference": "168dbe519737221dc87d17385cde33073881fd02",
+                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/a99f94e63b512d75f851b181afcdf0ee9ebef7e6",
+                "reference": "a99f94e63b512d75f851b181afcdf0ee9ebef7e6",
                 "shasum": ""
             },
             "require": {
@@ -1332,7 +1332,7 @@
                 "sftp",
                 "storage"
             ],
-            "time": "2018-04-06T09:58:14+00:00"
+            "time": "2018-05-07T08:44:23+00:00"
         },
         {
             "name": "madewithlove/illuminate-psr-cache-bridge",
@@ -2255,16 +2255,16 @@
         },
         {
             "name": "spatie/laravel-backup",
-            "version": "5.6.6",
+            "version": "5.7.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-backup.git",
-                "reference": "e40a94f5d1224356a002c1f74643782e684caa17"
+                "reference": "60c6fbc27c9c2cbdf3c7da90b080a63d2599cd2d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-backup/zipball/e40a94f5d1224356a002c1f74643782e684caa17",
-                "reference": "e40a94f5d1224356a002c1f74643782e684caa17",
+                "url": "https://api.github.com/repos/spatie/laravel-backup/zipball/60c6fbc27c9c2cbdf3c7da90b080a63d2599cd2d",
+                "reference": "60c6fbc27c9c2cbdf3c7da90b080a63d2599cd2d",
                 "shasum": ""
             },
             "require": {
@@ -2324,7 +2324,7 @@
                 "laravel-backup",
                 "spatie"
             ],
-            "time": "2018-05-05T09:08:56+00:00"
+            "time": "2018-05-11T07:06:58+00:00"
         },
         {
             "name": "spatie/temporary-directory",
@@ -3611,16 +3611,16 @@
         },
         {
             "name": "mockery/mockery",
-            "version": "1.0",
+            "version": "1.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mockery/mockery.git",
-                "reference": "1bac8c362b12f522fdd1f1fa3556284c91affa38"
+                "reference": "99e29d3596b16dabe4982548527d5ddf90232e99"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mockery/mockery/zipball/1bac8c362b12f522fdd1f1fa3556284c91affa38",
-                "reference": "1bac8c362b12f522fdd1f1fa3556284c91affa38",
+                "url": "https://api.github.com/repos/mockery/mockery/zipball/99e29d3596b16dabe4982548527d5ddf90232e99",
+                "reference": "99e29d3596b16dabe4982548527d5ddf90232e99",
                 "shasum": ""
             },
             "require": {
@@ -3629,7 +3629,8 @@
                 "php": ">=5.6.0"
             },
             "require-dev": {
-                "phpunit/phpunit": "~5.7|~6.1"
+                "phpdocumentor/phpdocumentor": "^2.9",
+                "phpunit/phpunit": "~5.7.10|~6.5"
             },
             "type": "library",
             "extra": {
@@ -3658,8 +3659,8 @@
                     "homepage": "http://davedevelopment.co.uk"
                 }
             ],
-            "description": "Mockery is a simple yet flexible PHP mock object framework for use in unit testing with PHPUnit, PHPSpec or any other testing framework. Its core goal is to offer a test double framework with a succinct API capable of clearly defining all possible object operations and interactions using a human readable Domain Specific Language (DSL). Designed as a drop in alternative to PHPUnit's phpunit-mock-objects library, Mockery is easy to integrate with PHPUnit and can operate alongside phpunit-mock-objects without the World ending.",
-            "homepage": "http://github.com/mockery/mockery",
+            "description": "Mockery is a simple yet flexible PHP mock object framework",
+            "homepage": "https://github.com/mockery/mockery",
             "keywords": [
                 "BDD",
                 "TDD",
@@ -3672,7 +3673,7 @@
                 "test double",
                 "testing"
             ],
-            "time": "2017-10-06T16:20:43+00:00"
+            "time": "2018-05-08T08:54:48+00:00"
         },
         {
             "name": "myclabs/deep-copy",

@@ -17,7 +17,7 @@ class SiteTemplatesMeta extends Model
 
     public static function selectedOptions2($template_id)
     {
-        $options = SiteTemplatesMeta::where('templates_id', "=",$template_id)->orderby('order')->get()->toArray();
+        $options = SiteTemplatesMeta::where('templates_id', "=",$template_id)->orderByRaw("`order` = '0', `order` ASC")->get()->toArray();
         if (!empty($options))
             $options = (new static())->buildSelectOptions($options);
 
