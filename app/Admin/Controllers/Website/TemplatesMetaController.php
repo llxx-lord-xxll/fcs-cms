@@ -131,7 +131,7 @@ class TemplatesMetaController extends Controller
             $form->select('parent_id','Parent Widget')->options(SiteTemplatesMeta::selectedOptions2($this->tid));
             $form->select('widgets_id','Widget')->options(Widgets::selectOptions())->default(key(Widgets::selectOptions()));
             $form->hasMany('templates_meta_values','Widget Properties',function (Form\NestedForm $form){
-                $form->select('meta_key','Property Name')->options(array('style'=>'Style','innserstyle'=>'InnerStyle','class'=>'Class','innerclass'=>'InnerClass','id'=>"ID"));
+                $form->select('meta_key','Property Name')->options(array('style'=>'Style','class'=>'Class','id'=>"ID",'height'=>'Height','width'=>'Width','align'=>'Alignment'));
                 $form->text('meta_value','Value');
             });
 
@@ -149,7 +149,7 @@ class TemplatesMetaController extends Controller
             $form->select('parent_id','Parent Widget')->options(SiteTemplatesMeta::selectedOptions2($this->tid));
             $form->select('widgets_id','Widget')->options(Widgets::selectOptions())->default(key(Widgets::selectOptions()));
             $form->hasMany('templates_meta_values','Widget Properties',function (Form\NestedForm $form){
-                $form->select('meta_key','Property Name')->options(array('style'=>'Style','innserstyle'=>'InnerStyle','class'=>'Class','innerclass'=>'InnerClass','id'=>"ID"));
+                $form->select('meta_key','Property Name')->options(array('style'=>'Style','class'=>'Class','id'=>"ID",'height'=>'Height','width'=>'Width','align'=>'Alignment'));
                 $form->text('meta_value','Value');
             });
 
