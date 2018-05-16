@@ -22,6 +22,7 @@ Route::group([
         $router->resource('/layouts', 'Website\LayoutController');
         $router->resource('/templates', 'Website\TemplatesController');
         $router->resource('/templates/{tid}/meta', 'Website\TemplatesMetaController');
+        $router->get('/templates/{tid}/meta/{metum}/clone', 'Website\TemplatesMetaController@clone_branch')->name('meta.clone');
     });
     $router->resource('/pages', 'Website\PageController');
     $router->resource('/pages/{pid}/data', 'Website\PageDataController', ['except' => ['create']]);

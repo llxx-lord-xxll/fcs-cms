@@ -68,6 +68,11 @@ class TemplatesMetaController extends Controller
         return $this->form2()->update($this->metum);
     }
 
+    public function clone_branch($tid,$metum)
+    {
+        SiteTemplatesMeta::clone_item($metum);
+        return redirect()->route('meta.index',['tid'=>$tid]);
+    }
 
     public function destroy($tid,$metum)
     {
@@ -91,20 +96,23 @@ class TemplatesMetaController extends Controller
      */
     protected function treeView()
     {
-        return SiteTemplatesMeta::tree(function (Tree $tree) {
+        $tid = $this->tid;
+        return SiteTemplatesMeta::tree(function (Tree $tree) use ($tid){
             $tree->query(function ($model) {
                 return $model->where('templates_id','=',$this->tid);
             });
 
             $tree->disableCreate();
 
-            $tree->branch(function ($branch) {
+            $tree->branch(function ($branch) use ($tid){
                 $widget = Widgets::find($branch['widgets_id'])->title;
-
-                $payload = "<i class='fa '></i>&nbsp;<strong>{$branch['title']} &nbsp; &nbsp; ({$widget}) </strong>";
+                $keyid = $branch['id'];
+                $payload = "<i class='fa '></i>&nbsp;<strong>{$branch['title']} &nbsp; &nbsp; ({$widget}) </strong>" . '<span class="pull-right dd-nodrag" style="position: absolute;top: 8px;right: 42px;"> <a href="'. route('meta.clone',['tid'=>$tid,'metum'=>$keyid]) .'" title="Clone this"><i class="fa fa-clone"></i></a> </span>';
 
                 return $payload;
             });
+
+
         });
     }
 
