@@ -14,6 +14,7 @@ use App\Http\Controllers\Controller;
 use Encore\Admin\Controllers\ModelForm;
 use Encore\Admin\Layout\Row;
 use Encore\Admin\Tree;
+use Encore\Admin\Widgets\Box;
 use Mockery\Exception;
 
 class TemplatesMetaController extends Controller
@@ -37,7 +38,10 @@ class TemplatesMetaController extends Controller
             $content->row(function (Row $row){
                 $row->column(6, $this->treeView()->render());
 
-                $row->column(6, $this->form()->setAction(admin_base_path('appearance/templates/'.$this->tid.'/meta')));
+                $row->column(6, new Box(function (Box $box){
+                    $box->title('');
+                   $box->content( $this->form()->setAction(admin_base_path('appearance/templates/'.$this->tid.'/meta')));
+                }));
             });
         });
     }
