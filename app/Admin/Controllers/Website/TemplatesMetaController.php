@@ -99,7 +99,9 @@ class TemplatesMetaController extends Controller
             $tree->disableCreate();
 
             $tree->branch(function ($branch) {
-                $payload = "<i class='fa '></i>&nbsp;<strong>{$branch['title']}</strong>";
+                $widget = Widgets::find($branch['widgets_id'])->title;
+
+                $payload = "<i class='fa '></i>&nbsp;<strong>{$branch['title']} &nbsp; &nbsp; ({$widget}) </strong>";
 
                 return $payload;
             });
