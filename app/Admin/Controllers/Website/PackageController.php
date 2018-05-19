@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Admin\Controllers;
+namespace App\Admin\Controllers\Website;
 
 use App\Admin\Databases\Website\SitePackages;
 
