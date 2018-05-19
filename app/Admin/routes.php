@@ -30,8 +30,13 @@ Route::group([
     $router->resource('/applications/chapter', 'Website\NewChapterFormController',['except' => ['create']]);
     $router->resource('/applications/recruitment', 'Website\ReqruitmentsFormController',['except' => ['create']]);
     $router->resource('/contact', 'Website\ContactFormController', ['except' => ['create']]);
-    $router->resource('/packs', 'Website\PackageController');
-    $router->resource('/packs/groups', 'Website\PackageGroupController');
+
+    $router->group(['prefix' => 'packs'],function (Router $router)
+    {
+        $router->resource('/', 'Website\PackageController');
+        $router->resource('/groups', 'Website\PackageGroupController');
+    });
+
 
     
 });
