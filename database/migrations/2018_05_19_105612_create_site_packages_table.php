@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateSitePackageGroupTable extends Migration
+class CreateSitePackagesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,11 @@ class CreateSitePackageGroupTable extends Migration
      */
     public function up()
     {
-        Schema::create('site_package_group', function (Blueprint $table) {
+        Schema::create('site_packages', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('package_group_id');
+            $table->string('icon');
             $table->string('title');
-            $table->string('price');
-            $table->string('description')->nullable();
-            $table->string('icon')->nullable();
-            $table->string('slug')->unique();
-            $table->timestamps();
         });
     }
 
@@ -31,6 +28,6 @@ class CreateSitePackageGroupTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('site_package_group');
+        Schema::dropIfExists('site_packages');
     }
 }
