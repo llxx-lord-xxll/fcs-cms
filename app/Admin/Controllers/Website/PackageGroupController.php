@@ -10,6 +10,7 @@ use Encore\Admin\Facades\Admin;
 use Encore\Admin\Layout\Content;
 use App\Http\Controllers\Controller;
 use Encore\Admin\Controllers\ModelForm;
+use Encore\Admin\Layout\Row;
 
 class PackageGroupController extends Controller
 {
@@ -24,10 +25,13 @@ class PackageGroupController extends Controller
     {
         return Admin::content(function (Content $content) {
 
-            $content->header('header');
-            $content->description('description');
-
-            $content->body($this->grid());
+            $content->header('Manage package groups');
+            $content->description('Package group management is very easy in this way');
+            $content->row(function (Row $row)
+            {
+                $row->column(6,$this->grid());
+                $row->column(6,$this->form()->setAction("/packs/groups"));
+            });
         });
     }
 
@@ -41,8 +45,8 @@ class PackageGroupController extends Controller
     {
         return Admin::content(function (Content $content) use ($id) {
 
-            $content->header('header');
-            $content->description('description');
+            $content->header('Edit package group');
+            $content->description('Edit the group information');
 
             $content->body($this->form()->edit($id));
         });
@@ -57,8 +61,8 @@ class PackageGroupController extends Controller
     {
         return Admin::content(function (Content $content) {
 
-            $content->header('header');
-            $content->description('description');
+            $content->header('Create new package group');
+            $content->description('Package group creation on the go');
 
             $content->body($this->form());
         });
@@ -73,10 +77,11 @@ class PackageGroupController extends Controller
     {
         return Admin::grid(SitePackageGroup::class, function (Grid $grid) {
 
-            $grid->id('ID')->sortable();
-
-            $grid->created_at();
-            $grid->updated_at();
+            $grid->column('title')->sortable();
+            $grid->column('slug');
+            $grid->disableCreateButton();
+            $grid->disableExport();
+            $grid->disableFilter();
         });
     }
 
@@ -89,10 +94,10 @@ class PackageGroupController extends Controller
     {
         return Admin::form(SitePackageGroup::class, function (Form $form) {
 
-            $form->display('id', 'ID');
-
-            $form->display('created_at', 'Created At');
-            $form->display('updated_at', 'Updated At');
+            $form->text('title');
+            $form->text('slug');
+            $form->textarea('description');
+            $form->icon('icon');
         });
     }
 }

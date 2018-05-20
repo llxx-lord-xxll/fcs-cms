@@ -18,6 +18,7 @@ class CreateSitePackagesTable extends Migration
             $table->integer('package_group_id');
             $table->string('icon');
             $table->string('title');
+            $table->string('price');
         });
     }
 

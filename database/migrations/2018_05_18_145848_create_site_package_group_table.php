@@ -16,7 +16,6 @@ class CreateSitePackageGroupTable extends Migration
         Schema::create('site_package_group', function (Blueprint $table) {
             $table->increments('id');
             $table->string('title');
-            $table->string('price');
             $table->string('description')->nullable();
             $table->string('icon')->nullable();
             $table->string('slug')->unique();
