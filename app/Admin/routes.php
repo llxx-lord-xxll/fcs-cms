@@ -33,7 +33,14 @@ Route::group([
 
     $router->group(['prefix' => 'packs'],function (Router $router)
     {
-        $router->resource('/', 'Website\PackageController');
+        $router->get('/',function (){
+            return redirect()->route('item.index');
+        });
+        $router->get('/create',function (){
+            return redirect()->route('item.create');
+        });
+
+        $router->resource('/item', 'Website\PackageController',['wildcard' => 'id']);
         $router->resource('/groups', 'Website\PackageGroupController');
     });
 

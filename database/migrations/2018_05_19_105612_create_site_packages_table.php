@@ -19,6 +19,7 @@ class CreateSitePackagesTable extends Migration
             $table->string('icon');
             $table->string('title');
             $table->string('price');
+            $table->string('deadline');
         });
     }
 
