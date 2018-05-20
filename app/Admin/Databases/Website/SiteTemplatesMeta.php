@@ -19,10 +19,38 @@ class SiteTemplatesMeta extends Model
     public static function selectedOptions2($template_id)
     {
         $options = SiteTemplatesMeta::where('templates_id', "=",$template_id)->orderByRaw("`order` = '0', `order` ASC")->get()->toArray();
+
         if (!empty($options))
             $options = (new static())->buildSelectOptions($options);
 
         return collect($options)->prepend('Root',0)->all();
+    }
+
+
+    protected function buildSelectOptions(array $nodes = [], $parentId = 0, $prefix = '')
+    {
+        $prefix = $prefix ?: str_repeat('&nbsp;', 1);
+
+        $options = [];
+
+        if (empty($nodes)) {
+            $nodes = $this->allNodes();
+        }
+
+        foreach ($nodes as $node) {
+            $node[$this->titleColumn] = $prefix.'&nbsp;'.$node[$this->titleColumn];
+            if ($node[$this->parentColumn] == $parentId) {
+                $children = $this->buildSelectOptions($nodes, $node[$this->getKeyName()], $prefix.$prefix);
+
+                $options[$node[$this->getKeyName()]] = $node[$this->titleColumn];
+
+                if ($children) {
+                    $options += $children;
+                }
+            }
+        }
+
+        return $options;
     }
 
     public function __construct(array $attributes = [])

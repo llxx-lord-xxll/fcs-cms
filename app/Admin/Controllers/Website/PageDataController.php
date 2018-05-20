@@ -2,6 +2,7 @@
 
 namespace App\Admin\Controllers\Website;
 
+use App\Admin\Databases\Website\SitePackageGroup;
 use App\Admin\Databases\Website\SitePages;
 use App\Admin\Databases\Website\SitePagesMeta;
 
@@ -151,7 +152,6 @@ class PageDataController extends Controller
 
 
         return Admin::form(SitePagesMeta::class, function (Form $form) use ($pid,$data){
-            $form->display('id', 'ID');
             $form->display('meta_key','Key');
 
             $form->setAction(route('data.update',['pid'=>$this->pid,'data'=>$this->data]));
@@ -160,37 +160,40 @@ class PageDataController extends Controller
                 switch (Widgets::find(SiteTemplatesMeta::find($data)->widgets_id)->slug)
                 {
                     case 'image':
-                        $form->image('meta_value',Widgets::find(SiteTemplatesMeta::find($data)->title))->uniqueName();
+                        $form->image('meta_value',SiteTemplatesMeta::find($data)->title)->uniqueName();
                         break;
                     case 'text':
-                        $form->text('meta_value',Widgets::find(SiteTemplatesMeta::find($data)->title));
+                        $form->text('meta_value',SiteTemplatesMeta::find($data)->title);
                         break;
                     case 'html':
-                        $form->aceditor('meta_value',Widgets::find(SiteTemplatesMeta::find($data)->title));
+                        $form->aceditor('meta_value',SiteTemplatesMeta::find($data)->title);
                         break;
                     case 'textarea':
-                        $form->textarea('meta_value',Widgets::find(SiteTemplatesMeta::find($data)->title));
+                        $form->textarea('meta_value',SiteTemplatesMeta::find($data)->title);
                         break;
                     case 'images':
-                        $form->multipleImage('meta_value',Widgets::find(SiteTemplatesMeta::find($data)->title))->uniqueName();
+                        $form->multipleImage('meta_value',SiteTemplatesMeta::find($data)->title)->uniqueName();
                         break;
                     case 'files':
-                        $form->multipleFile('meta_value',Widgets::find(SiteTemplatesMeta::find($data)->title))->uniqueName();
+                        $form->multipleFile('meta_value',SiteTemplatesMeta::find($data)->title)->uniqueName();
                         break;
                     case 'file':
-                        $form->file('meta_value',Widgets::find(SiteTemplatesMeta::find($data)->title));
+                        $form->file('meta_value',SiteTemplatesMeta::find($data)->title);
                         break;
                     case 'date_time':
-                        $form->datetime('meta_value',Widgets::find(SiteTemplatesMeta::find($data)->title));
+                        $form->datetime('meta_value',SiteTemplatesMeta::find($data)->title);
                         break;
                     case 'date_time_range':
-                        $form->datetimeRange('meta_value',Widgets::find(SiteTemplatesMeta::find($data)->title));
+                        $form->datetimeRange('meta_value',SiteTemplatesMeta::find($data)->title);
                         break;
                     case 'date':
-                        $form->date('meta_value',Widgets::find(SiteTemplatesMeta::find($data)->title));
+                        $form->date('meta_value',SiteTemplatesMeta::find($data)->title);
                         break;
                     case 'time':
-                        $form->time('meta_value',Widgets::find(SiteTemplatesMeta::find($data)->title));
+                        $form->time('meta_value',SiteTemplatesMeta::find($data)->title);
+                        break;
+                    case 'pricing_table':
+                        $form->select('meta_value','Select Package Group')->options(SitePackageGroup::getAllPackageGroups());
                         break;
                     default:
                         $form->html('<p class="form-control text-warning">Nothing to edit</p>');
@@ -199,8 +202,7 @@ class PageDataController extends Controller
             }
 
 
-            $form->display('created_at', 'Created At');
-            $form->display('updated_at', 'Updated At');
+
 
         });
     }
