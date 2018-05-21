@@ -42,8 +42,14 @@ Route::group([
 
         $router->resource('/item', 'Website\PackageController',['wildcard' => 'id']);
         $router->resource('/groups', 'Website\PackageGroupController');
+
     });
 
+    $router->group(['prefix' => 'gallery'],function (Router $router)
+    {
+        $router->resource('/albums', 'Website\GalleryAlbumController',['except' => ['create']]);
+        $router->resource('/photos', 'Website\GalleryPhotoController',['except' => ['create']]);
+    });
 
     
 });
