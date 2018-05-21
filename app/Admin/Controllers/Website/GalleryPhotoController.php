@@ -84,13 +84,12 @@ class GalleryPhotoController extends Controller
                         $photos = SiteGalleryPhotoMeta::getPhotos($item);
                         foreach ($photos as $photo)
                         {
-                            dump($photo);
                             $query->orWhere('id','=',$photo);
                         }
                     }
 
                     return $query;
-                },'album')->multipleSelect(SiteGalleryAlbums::allNodes());
+                },'Album')->multipleSelect(SiteGalleryAlbums::allNodes());
             });
 
             $grid->column('caption');

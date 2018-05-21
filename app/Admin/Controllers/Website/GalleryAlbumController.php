@@ -2,8 +2,10 @@
 
 namespace App\Admin\Controllers\Website;
 
+use App\Admin\Databases\Website\SiteGallery;
 use App\Admin\Databases\Website\SiteGalleryAlbums;
 
+use App\Admin\Databases\Website\SiteGalleryAlbumMeta;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
 use Encore\Admin\Facades\Admin;
@@ -17,7 +19,7 @@ use Mockery\Exception;
 class GalleryAlbumController extends Controller
 {
     use ModelForm;
-
+    private $pid = -1;
     /**
      * Index interface.
      *
@@ -48,6 +50,7 @@ class GalleryAlbumController extends Controller
      */
     public function edit($id)
     {
+        $this->pid = $id;
         return Admin::content(function (Content $content) use ($id) {
 
             $content->header('Edit Album Name');
@@ -55,24 +58,6 @@ class GalleryAlbumController extends Controller
 
             $content->body($this->form()->edit($id));
         });
-    }
-
-    public function store()
-    {
-        try
-        {
-            $slug = str_slug(request('title'));
-            $album = new SiteGalleryAlbums();
-            $album->title = request('title');
-            $album->slug = $slug;
-            $album->save();
-        }
-        catch (Exception $exception)
-        {
-            Throw new \Exception($exception->getMessage());
-        }
-
-        return redirect()->route('albums.index');
     }
 
     /**
@@ -86,6 +71,22 @@ class GalleryAlbumController extends Controller
 
             $grid->column('title');
             $grid->column('slug');
+
+            $grid->column('gallery')->display(function ($gallery)
+            {
+                $ret = '';
+                foreach (SiteGalleryAlbumMeta::getGalleries($this->id) as $item)
+                {
+                    $gallery = SiteGallery::find($item);
+                    if ($gallery != null)
+                    {
+                        $ret .= "<span style='border: 1px;padding:5px;margin: 3px; color: white; background: royalblue;'>$gallery->title</span>";
+                    }
+                }
+
+                return $ret;
+            });
+
             $grid->disableExport();
             $grid->disableCreateButton();
 
@@ -94,6 +95,20 @@ class GalleryAlbumController extends Controller
             {
                $filter->disableIdFilter();
                $filter->like('title');
+                $filter->where(function ($query)
+                {
+                    foreach ($this->input as $item)
+                    {
+                        $albums = SiteGalleryAlbumMeta::getAlbums($item);
+                        foreach ($albums as $album)
+                        {
+                            $query->OrWhere('id','=',$album);
+                        }
+
+                    }
+
+                    return $query;
+                },'Gallery')->multipleSelect(SiteGallery::allNodes());
             });
         });
     }
@@ -107,6 +122,24 @@ class GalleryAlbumController extends Controller
     {
         return Admin::form(SiteGalleryAlbums::class, function (Form $form) {
             $form->text('title');
+
+            $form->multipleSelect('gallery')->options(SiteGallery::allNodes())->value(SiteGalleryAlbumMeta::getGalleries($this->pid));
+            $form->ignore('gallery');
+
+            $form->saved(function (Form $form)
+            {
+                SiteGalleryAlbumMeta::where('album_id','=',$form->model()->id)->delete();
+                foreach (request('gallery') as $item)
+                {
+                    if ($item != null)
+                    {
+                        $meta = new SiteGalleryAlbumMeta();
+                        $meta->album_id = $form->model()->id;
+                        $meta->gallery_id = $item;
+                        $meta->save();
+                    }
+                }
+            });
         });
     }
 }

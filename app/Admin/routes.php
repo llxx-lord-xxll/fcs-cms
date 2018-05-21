@@ -47,6 +47,7 @@ Route::group([
 
     $router->group(['prefix' => 'gallery'],function (Router $router)
     {
+        $router->resource('/view', 'Website\GalleryController',['except' => ['create']]);
         $router->resource('/albums', 'Website\GalleryAlbumController',['except' => ['create']]);
         $router->resource('/photos', 'Website\GalleryPhotoController',['except' => ['create']]);
     });
