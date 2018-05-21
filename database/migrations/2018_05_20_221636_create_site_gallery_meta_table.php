@@ -15,7 +15,7 @@ class CreateSiteGalleryMetaTable extends Migration
     {
         Schema::create('site_gallery_meta', function (Blueprint $table) {
             $table->integer('gallery_id');
-            $table->string('album_id');
+            $table->integer('album_id');
             $table->primary(['gallery_id', 'album_id']);
         });
     }
