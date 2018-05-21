@@ -19,7 +19,6 @@ class CreateSiteGalleryPhotosTable extends Migration
             $table->string('image');
             $table->integer('width');
             $table->integer('height');
-            $table->string('albums');
             $table->timestamps();
         });
     }
