@@ -2,6 +2,7 @@
 
 namespace App\Admin\Controllers\Website;
 
+use App\Admin\Databases\Website\SiteGallery;
 use App\Admin\Databases\Website\SitePackageGroup;
 use App\Admin\Databases\Website\SitePages;
 use App\Admin\Databases\Website\SitePagesMeta;
@@ -194,6 +195,9 @@ class PageDataController extends Controller
                         break;
                     case 'pricing_table':
                         $form->select('meta_value','Select Package Group')->options(SitePackageGroup::getAllPackageGroups());
+                        break;
+                    case 'gallery':
+                        $form->select('meta_value','Select Gallery')->options(SiteGallery::allNodes());
                         break;
                     default:
                         $form->html('<p class="form-control text-warning">Nothing to edit</p>');

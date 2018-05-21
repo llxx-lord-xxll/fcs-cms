@@ -131,6 +131,8 @@ class GalleryPhotoController extends Controller
         return Admin::form(SiteGalleryPhotos::class, function (Form $form) {
             $form->text('caption');
             $form->image('image')->uniqueName();
+            $form->number('height')->default(151);
+            $form->number('width')->default(240);
             $form->multipleSelect('albums')->options(SiteGalleryAlbums::allNodes())->value(SiteGalleryPhotoMeta::getAlbums($this->pid));
             $form->ignore('albums');
 
