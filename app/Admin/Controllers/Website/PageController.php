@@ -7,6 +7,7 @@ use App\Admin\Databases\Website\SitePages;
 use App\Admin\Databases\Website\SitePagesMeta;
 use App\Admin\Databases\Website\SiteTemplates;
 use App\Admin\Databases\Website\SiteTemplatesMeta;
+use App\Admin\Databases\Website\Widgets;
 use Carbon\Carbon;
 use Encore\Admin\Auth\Database\Administrator;
 use Encore\Admin\Form;
@@ -155,16 +156,32 @@ class PageController extends Controller
             $form->saved(function (Form $form) {
                 foreach(SiteTemplatesMeta::where('templates_id','=',$form->template_id)->get() as $row)
                 {
-                   if( SitePagesMeta::where('pages_id','=',$form->model()->id)->where('meta_type','=','data')->where('meta_key','=','input_'. $row->id)->first() == null)
-                   {
+                    $widget_type = Widgets::find($row->widgets_id);
 
-                       $pageMeta = new SitePagesMeta();
-                       $pageMeta->pages_id = $form->model()->id;
-                       $pageMeta->meta_type = 'data';
-                       $pageMeta->meta_key = 'input_'. $row->id;
-                       $pageMeta->meta_value = '';
-                       $pageMeta->save();
-                   }
+                    if ($widget_type != null)
+                    {
+                        $widget_type = $widget_type->slug();
+                    }
+
+                    switch ($widget_type)
+                    {
+                        case 'test':
+
+                            break;
+
+                        default:
+                            if( SitePagesMeta::where('pages_id','=',$form->model()->id)->where('meta_type','=','data')->where('meta_key','=','input_'. $row->id)->first() == null)
+                            {
+                                $pageMeta = new SitePagesMeta();
+                                $pageMeta->pages_id = $form->model()->id;
+                                $pageMeta->meta_type = 'data';
+                                $pageMeta->meta_key = 'input_'. $row->id;
+                                $pageMeta->meta_value = '';
+                                $pageMeta->save();
+                            }
+                            break;
+                    }
+
                 }
                     Storage::disk("site_pages")->put($form->model()->slug.".blade.php",request('page_data'));
 
