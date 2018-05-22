@@ -199,6 +199,9 @@ class PageDataController extends Controller
                     case 'gallery':
                         $form->select('meta_value','Select Gallery')->options(SiteGallery::allNodes());
                         break;
+                    case 'a':
+                        $form->text('meta_value','Hyperlink');
+                        break;
                     default:
                         $form->html('<p class="form-control text-warning">Nothing to edit</p>');
                         break;
