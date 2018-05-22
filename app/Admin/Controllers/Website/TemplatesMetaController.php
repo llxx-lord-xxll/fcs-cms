@@ -146,6 +146,7 @@ class TemplatesMetaController extends Controller
         return Admin::form(SiteTemplatesMeta::class, function (Form $form) {
             $form->text('title');
             $form->display('id', 'ID');
+            $form->number('order');
             $form->hidden('templates_id')->value($this->tid);
             $form->select('parent_id','Parent Widget')->options(SiteTemplatesMeta::selectedOptions2($this->tid));
             $form->select('widgets_id','Widget')->options(Widgets::selectOptions())->default(key(Widgets::selectOptions()));
