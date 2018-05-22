@@ -118,7 +118,7 @@ class TemplatesController extends Controller
             $form->display('updated_at', 'Updated At');
 
             $form->saving(function (Form $form) {
-                $form->user_id = Admin::user()->getAuthIdentifier();
+                $form->author = Admin::user()->getAuthIdentifier();
             });
 
         });
