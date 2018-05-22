@@ -54,8 +54,8 @@ class GalleryPhotoController extends Controller
         $this->pid = $id;
         return Admin::content(function (Content $content) use ($id) {
 
-            $content->header('header');
-            $content->description('description');
+            $content->header('Edit photo attributes');
+            $content->description('Modify the uploaded item');
 
             $content->body($this->form()->edit($id));
         });
