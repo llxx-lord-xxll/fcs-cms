@@ -160,7 +160,7 @@ class PageController extends Controller
 
                     if ($widget_type != null)
                     {
-                        $widget_type = $widget_type->slug();
+                        $widget_type = $widget_type->slug;
                     }
 
                     switch ($widget_type)
