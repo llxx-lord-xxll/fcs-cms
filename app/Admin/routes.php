@@ -52,5 +52,11 @@ Route::group([
         $router->resource('/photos', 'Website\GalleryPhotoController',['except' => ['create']]);
     });
 
+    $router->group(['prefix' => 'teams'],function (Router $router)
+    {
+        $router->resource('/view', 'Website\TeamController',['except' => ['create'],'as'=>'team']);
+        $router->resource('/people', 'Website\TeamPeopleController',['as'=>'team']);
+    });
+
     
 });

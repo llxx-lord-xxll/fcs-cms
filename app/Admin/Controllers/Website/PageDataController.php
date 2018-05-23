@@ -7,6 +7,7 @@ use App\Admin\Databases\Website\SitePackageGroup;
 use App\Admin\Databases\Website\SitePages;
 use App\Admin\Databases\Website\SitePagesMeta;
 
+use App\Admin\Databases\Website\SiteTeams;
 use App\Admin\Databases\Website\SiteTemplatesMeta;
 use App\Admin\Databases\Website\Widgets;
 use Encore\Admin\Form;
@@ -201,6 +202,9 @@ class PageDataController extends Controller
                         break;
                     case 'a':
                         $form->text('meta_value','Hyperlink');
+                        break;
+                    case 'people':
+                        $form->select('meta_value','Select Team to display people')->options(SiteTeams::allNodes());
                         break;
                     default:
                         $form->html('<p class="form-control text-warning">Nothing to edit</p>');
