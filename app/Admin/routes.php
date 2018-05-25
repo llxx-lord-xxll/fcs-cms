@@ -58,5 +58,6 @@ Route::group([
         $router->resource('/people', 'Website\TeamPeopleController',['as'=>'team']);
     });
 
+    $router->resource('/settings/general', 'Website\GeneralSettingsController',['as'=>'settings','only'=>['index','update']]);
     
 });
