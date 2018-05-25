@@ -59,5 +59,6 @@ Route::group([
     });
 
     $router->resource('/settings/general', 'Website\GeneralSettingsController',['as'=>'settings','only'=>['index','update']]);
-    
+    $router->resource('/timeline', 'Website\TimelineController');
+
 });
