@@ -10,4 +10,14 @@ class SiteSettings extends Model
     public $timestamps = false;
 
     protected $fillable = ['meta_value'];
+
+    public static function getArray(){
+        $tmp = array();
+
+        foreach (SiteSettings::get() as $item)
+        {
+            $tmp[$item->meta_key] = $item->meta_value;
+        }
+        return $tmp;
+    }
 }

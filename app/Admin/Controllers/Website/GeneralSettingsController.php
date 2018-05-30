@@ -10,6 +10,8 @@ use Encore\Admin\Facades\Admin;
 use Encore\Admin\Layout\Content;
 use App\Http\Controllers\Controller;
 use Encore\Admin\Controllers\ModelForm;
+use Encore\Admin\Layout\Row;
+use Encore\Admin\Widgets\Box;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\ImageManagerStatic as Image;
@@ -30,69 +32,64 @@ class GeneralSettingsController extends Controller
             $content->header('General Settings');
             $content->description('Website Settings ');
 
-            $content->body($this->form()->edit(1)->setAction(route('settings.general.update',['general'=>'1'])));
+            $content->body(new Box('General Settings',$this->form()));
         });
     }
 
-
-    protected function form()
+    public function update($id)
     {
 
-        return Admin::form(SiteSettings::class, function (Form $form) {
-            foreach (SiteSettings::get() as $item)
+        foreach (SiteSettings::get() as $item)
+        {
+            if (request($item->meta_key) !=null)
             {
-                $form_elem = call_user_func_array(array($form, $item->type), array('input_'.$item->meta_key, $item->title));
-                $form->ignore('input_'.$item->meta_key);
-
-
+                $val =  request($item->meta_key);
                 switch ($item->type)
                 {
                     case 'image':
-                        $form_elem->help('To change the logo, please upload one');
+                        if (request()->file($item->meta_key) !=null)
+                        {
+                            $f = request()->file($item->meta_key);
+                            $fname = $f->getClientOriginalName(). uniqid(). "." .$f->guessClientExtension();
+                            $f->move(Storage::disk('site_upload')->path('images/'),$fname);
+                            $val = 'images/' . $fname;
+                        }
                         break;
                     default:
-                        $form_elem->attribute(['value'=>$item->meta_value]);
+
                         break;
                 }
 
+                SiteSettings::find($item->id)->update(['meta_value'=>$val]);
             }
+        }
+        return redirect(route('settings.general.index'));
+    }
 
-            $form->saving(function ($form)
+    protected function form()
+    {
+        $form = new \Encore\Admin\Widgets\Form(SiteSettings::getArray());
+        $form->action(route('settings.general.update',['general'=>'1']));
+        $form->method('post');
+        $form->hidden('_token')->default(csrf_token());
+        $form->hidden('_method')->default('PUT');
+        foreach (SiteSettings::get() as $item)
+        {
+            $form_elem = call_user_func_array(array($form, $item->type), array($item->meta_key, $item->title));
+
+            switch ($item->type)
             {
+                case 'image':
+                    $form_elem->help('To change the logo, please upload one');
+                    break;
+                default:
+                    $form_elem->attribute(['value'=>$item->meta_value]);
+                    break;
+            }
+        }
 
-                foreach (SiteSettings::get() as $item)
-                {
-                    if (request('input_'.$item->meta_key) !=null)
-                    {
-                        $val =  request('input_'.$item->meta_key);
-                        switch ($item->type)
-                        {
-                            case 'image':
-                                if (request()->file('input_'.$item->meta_key) !=null)
-                                {
-                                    $f = request()->file('input_'.$item->meta_key);
-                                    $fname = $f->getClientOriginalName(). uniqid(). "." .$f->guessClientExtension();
-                                    $f->move(Storage::disk('site_upload')->path('images/'),$fname);
-                                    $val = 'images/' . $fname;
-                                }
-                                break;
-                            default:
 
-                                break;
 
-                        }
-
-                        SiteSettings::find($item->id)->update(['meta_value'=>$val]);
-                    }
-                }
-                return;
-            });
-
-            $form->saved(function($form)
-            {
-               return redirect()->route('settings.general.index');
-            });
-
-        });
+        return $form;
     }
 }
