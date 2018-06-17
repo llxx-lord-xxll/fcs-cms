@@ -354,7 +354,7 @@ class DelegatesFormController extends Controller
             $grid->column('pitching_deck')->display(function($portfolio)
             {
                 if($portfolio != null){
-                    return "<a href='".Storage::disk('site_upload')->url('pitching-deck/'.$portfolio)."'>Download</a>";
+                    return "<a href='".Storage::disk('site_upload')->url('files/pdfs/'.$portfolio)."'>Download</a>";
                 }
               return '';
             });

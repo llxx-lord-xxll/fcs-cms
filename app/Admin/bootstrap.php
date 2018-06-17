@@ -23,4 +23,5 @@ app('view')->prependNamespace('admin', resource_path('views/admin'));
 
 \Encore\Admin\Form::extend('ckeditor', \App\Admin\Extension\Form\CKEditor::class);
 \Encore\Admin\Form::extend('aceditor', \App\Admin\Extension\Form\ACEDitor::class);
+\Encore\Admin\Form::extend('kcimage', \App\Admin\Extension\Form\KCImage::class);
 \Encore\Admin\Facades\Admin::js('/vendor/chartjs/Chart.min.js');

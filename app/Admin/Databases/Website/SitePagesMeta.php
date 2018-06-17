@@ -10,6 +10,7 @@ class SitePagesMeta extends Model
 {
     use AdminBuilder,ModelTree;
     protected $table = 'site_pages_meta';
+    protected $fillable = ['meta_value'];
 
     public function pages()
     {

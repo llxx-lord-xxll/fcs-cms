@@ -21,7 +21,16 @@ class CKEditor extends Field
 
     public function render()
     {
-        $this->script = "$('textarea.{$this->getElementClassString()}').ckeditor();";
+        //$this->script = " var editor = $('textarea.{$this->getElementClassString()}').ckeditor(); CKFinder.setupCKEditor( editor );";
+        $this->script = "var editor = CKEDITOR.replace( '{$this->getElementClassString()}', {
+    filebrowserBrowseUrl : '".asset('packages/kcfinder/browse.php?opener=ckeditor&type=files')."',
+    filebrowserImageBrowseUrl : '".asset('packages/kcfinder/browse.php?opener=ckeditor&type=images')."',
+    filebrowserFlashBrowseUrl : '".asset('packages/kcfinder/browse.php?opener=ckeditor&type=flash')."',
+    filebrowserUploadUrl : '".asset('packages/kcfinder/upload.php?opener=ckeditor&type=files')."',
+    filebrowserImageUploadUrl : '".asset('packages/kcfinder/upload.php?opener=ckeditor&type=images')."',
+    filebrowserFlashUploadUrl : '".asset('packages/kcfinder/upload.php?opener=ckeditor&type=flash')."'
+});
+";
 
         return parent::render();
     }

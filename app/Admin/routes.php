@@ -2,7 +2,31 @@
 
 use Illuminate\Routing\Router;
 
-Admin::registerAuthRoutes();
+
+Route::group([
+    'prefix'     => config('admin.route.prefix'),
+    'namespace'  => 'App\Admin\Controllers',
+    'middleware' => config('admin.route.middleware'),
+], function ($router) {
+
+    /* @var \Illuminate\Routing\Router $router */
+    $router->group([], function ($router) {
+
+        /* @var \Illuminate\Routing\Router $router */
+        $router->resource('auth/users', 'UserController');
+        $router->resource('auth/roles', 'RoleController');
+        $router->resource('auth/permissions', 'PermissionController');
+        $router->resource('auth/menu', 'MenuController', ['except' => ['create']]);
+        $router->resource('auth/logs', 'LogController', ['only' => ['index', 'destroy']]);
+    });
+
+    $router->get('auth/login', 'AuthController@getLogin');
+    $router->post('auth/login', 'AuthController@postLogin');
+    $router->get('auth/logout', 'AuthController@getLogout');
+    $router->get('auth/setting', 'AuthController@getSetting');
+    $router->put('auth/setting', 'AuthController@putSetting');
+});
+
 
 Route::get('', function () {
     return redirect('/dashboard');
@@ -22,6 +46,7 @@ Route::group([
         $router->resource('/layouts', 'Website\LayoutController');
         $router->resource('/templates', 'Website\TemplatesController');
         $router->resource('/templates/{tid}/meta', 'Website\TemplatesMetaController');
+        $router->resource('/footer', 'Website\FooterController');
         $router->get('/templates/{tid}/meta/{metum}/clone', 'Website\TemplatesMetaController@clone_branch')->name('meta.clone');
     });
     $router->resource('/pages', 'Website\PageController');
@@ -56,6 +81,12 @@ Route::group([
     {
         $router->resource('/view', 'Website\TeamController',['except' => ['create'],'as'=>'team']);
         $router->resource('/people', 'Website\TeamPeopleController',['as'=>'team']);
+    });
+
+    $router->group(['prefix' => 'posts'],function (Router $router)
+    {
+        $router->resource('/articles', 'Website\BlogPostController',['as'=>'post']);
+        $router->resource('/category', 'Website\BlogCategoryController',['as'=>'post']);
     });
 
     $router->resource('/settings/general', 'Website\GeneralSettingsController',['as'=>'settings','only'=>['index','update']]);

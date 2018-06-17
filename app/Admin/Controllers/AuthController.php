@@ -11,6 +11,7 @@ use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
@@ -22,13 +23,13 @@ class AuthController extends Controller
      */
     public function getLogin()
     {
+
         if (!Auth::guard('admin')->guest()) {
             return redirect(config('admin.route.prefix'));
         }
 
         return view('admin::login');
     }
-
     /**
      * @param Request $request
      *
@@ -49,7 +50,7 @@ class AuthController extends Controller
         if (Auth::guard('admin')->attempt($credentials)) {
             admin_toastr(trans('admin.login_successful'));
 
-            return redirect()->intended(config('admin.route.prefix'));
+            return redirect()->intended(config('admin.route.prefix'))->withCookie(cookie()->forever('allowCkfinder', "1"));;
         }
 
         return Redirect::back()->withInput()->withErrors(['username' => $this->getFailedLoginMessage()]);
@@ -65,8 +66,7 @@ class AuthController extends Controller
         Auth::guard('admin')->logout();
 
         session()->forget('url.intented');
-
-        return redirect(config('admin.route.prefix'));
+        return redirect(config('admin.route.prefix'))->withCookie('allowCkfinder',null);
     }
 
     /**

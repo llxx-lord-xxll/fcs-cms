@@ -18,7 +18,7 @@ class CreateSitePagesMetaTable extends Migration
             $table->integer('pages_id');
             $table->string('meta_type');
             $table->string('meta_key');
-            $table->string('meta_value');
+            $table->text('meta_value');
             $table->timestamps();
         });
     }
