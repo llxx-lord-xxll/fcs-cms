@@ -3,6 +3,7 @@
 namespace App\Admin\Controllers\Website;
 
 use App\Admin\Databases\Website\SiteBlogCategory;
+use App\Admin\Databases\Website\SiteForms;
 use App\Admin\Databases\Website\SiteGallery;
 use App\Admin\Databases\Website\SitePackageGroup;
 use App\Admin\Databases\Website\SitePages;
@@ -206,6 +207,9 @@ class PageDataController extends Controller
                         break;
                     case 'people':
                         $form->select('meta_value','Select Team to display people')->options(SiteTeams::allNodes());
+                        break;
+                    case 'forms':
+                        $form->select('meta_value','Select Team to display people')->options(SiteForms::allNodes());
                         break;
                     default:
                         $form->html('<p class="form-control text-warning">Nothing to edit</p>');
