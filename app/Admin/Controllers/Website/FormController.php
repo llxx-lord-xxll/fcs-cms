@@ -91,6 +91,9 @@ class FormController extends Controller
 
             $form->text('title');
             $form->text('table_name');
+            $form->text('submit_button','Submit Button')->default('Submit');
+            $form->aceditor('agreement_html','Agreement');
+
             $form->hasMany('entries', function (Form\NestedForm $form) {
                 $form->select('field_name')->rules('required')->options(function ($id)
                 {
@@ -100,7 +103,7 @@ class FormController extends Controller
                 $form->textarea('field_rules');
                 $form->textarea('field_instructions');
                 $form->textarea('field_ivals','Initial Values');
-                $form->select('field_type')->options(array('text'=>"Text",'file'=>'File Upload','textarea'=>"Text Area",'radiobutton'=>"Radio Buttons","checkbox"=>"Checkbox","select"=>"Select"))->rules('required');
+                $form->select('field_type')->options(array('text'=>"Text",'email'=>'Email','tel'=>'Telephone','url'=>'URL','file'=>'File Upload','textarea'=>"Text Area",'radiobutton'=>"Radio Buttons","checkbox"=>"Checkbox","select"=>"Select"))->rules('required');
                 $form->textarea('field_placeholder');
             });
 

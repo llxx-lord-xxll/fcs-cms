@@ -31,7 +31,7 @@ class ACEDitor extends Field
         enableBasicAutocompletion: true,
         minLines: 2}); editor.setValue(textarea.val()); editor.on('change', function(){
           $('textarea.".$this->getElementClassString()."text').val(editor.getValue());
-});";
+});console.log('".$this->getElementClassString()."')";
 
         return parent::render();
     }

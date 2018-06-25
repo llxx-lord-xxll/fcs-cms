@@ -17,6 +17,9 @@ class CreateSiteFormsTable extends Migration
             $table->increments('id');
             $table->string('title');
             $table->string('table_name');
+            $table->string('submit_button');
+            $table->string('agreement_html');
+
         });
     }
 
