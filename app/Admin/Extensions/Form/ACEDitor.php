@@ -15,6 +15,7 @@ class ACEDitor extends Field
     public static $js = [
         'packages/aceditor/build/src/ace.js',
         'packages/aceditor/build/src/ext-static_highlight.js',
+        'packages/aceditor/build/src/ext-language_tools.js',
     ];
 
     protected $view = 'admin.aceditor';
@@ -23,15 +24,18 @@ class ACEDitor extends Field
     {
 
         //$this->script = "$('textarea.{$this->getElementClassString()}').ckeditor();";
-        $this->script = "var textarea = $('textarea.".$this->getElementClassString()."text'); var editor = ace.edit('".$this->getElementClassString()."' ,{        
+        $this->script = "var textarea = $('textarea.".$this->getElementClassString()."text'); var aceditor = ace.edit('".$this->getElementClassString()."' ,{        
         theme: 'ace/theme/tomorrow_night_blue',
         mode: 'ace/mode/php_laravel_blade',
         autoScrollEditorIntoView: true,
         maxLines: 30,
         enableBasicAutocompletion: true,
-        minLines: 2}); editor.setValue(textarea.val()); editor.on('change', function(){
-          $('textarea.".$this->getElementClassString()."text').val(editor.getValue());
-});console.log('".$this->getElementClassString()."')";
+        enableSnippets: true,
+        enableLiveAutocompletion: false,
+        minLines: 2}); aceditor.setValue(textarea.val()); aceditor.on('change', function(){
+          $('textarea.".$this->getElementClassString()."text').val(aceditor.getValue());
+          console.log(aceditor.getValue());
+});";
 
         return parent::render();
     }

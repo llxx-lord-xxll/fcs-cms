@@ -15,6 +15,15 @@ class SiteForms extends Model
     {
         return $this->hasMany(FormEntries::class, 'form_id');
     }
+    public function subscriptions()
+    {
+        return $this->hasMany(FormSubscriptions::class, 'form_id')->where('subscription_type','=','subscription');
+    }
+    public function newslettersub()
+    {
+        return $this->hasMany(FormSubscriptions::class, 'form_id')->where('subscription_type','=','newsletter');
+    }
+
 
    public static function list_fields($table_name)
    {
