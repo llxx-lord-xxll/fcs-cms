@@ -19,7 +19,7 @@ class CreateSiteFormsTable extends Migration
             $table->string('table_name');
             $table->string('submit_button');
             $table->string('agreement_html');
-            $table->enum('subscribers', [0, 1]);
+            $table->string('subscribers', [0, 1]);
             $table->string('subscribers_confname');
             $table->string('newsletter', [0, 1]);
         });
