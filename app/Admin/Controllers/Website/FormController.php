@@ -25,8 +25,8 @@ class FormController extends Controller
     {
         return Admin::content(function (Content $content) {
 
-            $content->header('header');
-            $content->description('description');
+            $content->header('Forms');
+            $content->description('Manage the forms here');
 
             $content->body($this->grid());
         });

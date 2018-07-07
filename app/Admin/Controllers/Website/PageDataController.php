@@ -211,6 +211,9 @@ class PageDataController extends Controller
                     case 'forms':
                         $form->select('meta_value','Select Team to display people')->options(SiteForms::allNodes());
                         break;
+                    case  'accordion_faq':
+                        $form->aceditor('meta_value','List of accordions')->default('test');
+                        break;
                     default:
                         $form->html('<p class="form-control text-warning">Nothing to edit</p>');
                         break;
