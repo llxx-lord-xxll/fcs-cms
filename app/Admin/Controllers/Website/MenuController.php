@@ -5,6 +5,7 @@ namespace App\Admin\Controllers\Website;
 use App\Admin\Controllers\ModelForm;
 use App\Admin\Databases\Website\Menu;
 
+use App\Admin\Databases\Website\SiteMenus;
 use Encore\Admin\Facades\Admin;
 use Encore\Admin\Form;
 use Encore\Admin\Layout\Column;
@@ -12,6 +13,7 @@ use Encore\Admin\Layout\Content;
 use Encore\Admin\Layout\Row;
 use Encore\Admin\Tree;
 use Encore\Admin\Widgets\Box;
+use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 
 class MenuController extends Controller
@@ -23,29 +25,26 @@ class MenuController extends Controller
      *
      * @return Content
      */
-    public function index()
+    public $mid = null;
+
+    public function index($mid)
     {
-        return Admin::content(function (Content $content) {
-            $content->header(trans('admin.menu'));
-            $content->description(trans('admin.list'));
+        $this->mid = $mid;
+        return Admin::content(function (Content $content) use ($mid){
+            $content->header(trans('admin.menu') );
+            $content->description(trans('admin.list') . ' for ' . SiteMenus::find($mid)->title);
 
-            $content->row(function (Row $row) {
-                $row->column(6, $this->treeView()->render());
+            $content->row(function (Row $row) use ($mid){
+                $row->column(6, $this->treeView($mid)->render());
 
-                $row->column(6, function (Column $column) {
-                    $form = new \Encore\Admin\Widgets\Form();
-                    $form->action(admin_base_path('appearance/menu'));
+                $row->column(6, function (Column $column) use ($mid){
 
-                    $form->select('parent_id', trans('admin.parent_id'))->options(Menu::selectOptions());
-                    $form->text('title', trans('admin.title'))->rules('required');
-                    $form->text('uri', trans('admin.uri'));
-                    $form->hidden('_token')->default(csrf_token());
-
-                    $column->append((new Box(trans('admin.new'), $form))->style('success'));
+                    $column->append($this->form()->setAction(admin_base_path('appearance/menu/' . $mid . '/data')));
                 });
             });
         });
     }
+
 
     /**
      * Redirect to edit page.
@@ -54,18 +53,29 @@ class MenuController extends Controller
      *
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function show($id)
+    public function show($mid,$data_id)
     {
-        return redirect()->route('menu.edit', ['id' => $id]);
+        return redirect()->route('menu', ['id' => $data_id]);
+    }
+
+    public function update($mid,$data_id)
+    {
+        return $this->form()->update($data_id);
     }
 
     /**
      * @return \Encore\Admin\Tree
      */
-    protected function treeView()
+    protected function treeView($mid)
     {
-        return Menu::tree(function (Tree $tree) {
+
+
+        return Menu::tree(function (Tree $tree) use ($mid){
             $tree->disableCreate();
+
+            $tree->query(function ($model) use ($mid){
+                return $model->where('menu_id','=',$mid);
+            });
 
             $tree->branch(function ($branch) {
                 $payload = "<strong>{$branch['title']}</strong>";
@@ -85,6 +95,18 @@ class MenuController extends Controller
         });
     }
 
+    public function destroy($mid,$data_id)
+    {
+        try{
+            Menu::find($data_id)->delete();
+        }catch (\Exception $e)
+        {
+            return response(json_encode(['status'=>false,'message'=>"Delete unsucceeded !"]));
+        }
+
+        return response(json_encode(['status'=>true,'message'=>"Delete succeeded !"]))->header('Content-Type', 'application/json');
+    }
+
     /**
      * Edit interface.
      *
@@ -92,12 +114,12 @@ class MenuController extends Controller
      *
      * @return Content
      */
-    public function edit($id)
+    public function edit($mid,$data_id)
     {
-        return Admin::content(function (Content $content) use ($id) {
+        return Admin::content(function (Content $content) use ($data_id) {
             $content->header(trans('admin.menu'));
             $content->description(trans('admin.edit'));
-            $content->row($this->form()->edit($id));
+            $content->row($this->form()->edit($data_id));
         });
     }
 
@@ -109,12 +131,15 @@ class MenuController extends Controller
     public function form()
     {
         return Menu::form(function (Form $form) {
-            $form->display('id', 'ID');
             $form->select('parent_id', trans('admin.parent_id'))->options(Menu::selectOptions());
             $form->text('title', trans('admin.title'))->rules('required');
             $form->text('uri', trans('admin.uri'));
-            $form->display('created_at', trans('admin.created_at'));
-            $form->display('updated_at', trans('admin.updated_at'));
+            $form->hidden('menu_id')->default($this->mid);
+            $form->saving(function ($form)
+            {
+                $form->menu_id = $this->mid;
+            });
+
         });
     }
 

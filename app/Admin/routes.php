@@ -41,7 +41,8 @@ Route::group([
     $router->get('/dashboard', 'HomeController@index');
     $router->group(['prefix' => 'appearance'],function (Router $router)
     {
-        $router->resource('/menu', 'Website\MenuController', ['except' => ['create']]);
+        $router->resource('/menu', 'Website\MenuHolderController',['as'=>'sitemenu']);
+        $router->resource('/menu/{mid}/data', 'Website\MenuController',['as'=>'sitemenu']);
         $router->resource('/widgets', 'Website\WidgetController');
         $router->resource('/layouts', 'Website\LayoutController');
         $router->resource('/templates', 'Website\TemplatesController');

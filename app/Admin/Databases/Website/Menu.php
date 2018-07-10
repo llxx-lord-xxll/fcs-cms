@@ -26,7 +26,8 @@ class Menu extends Model
      *
      * @var array
      */
-    protected $fillable = ['parent_id', 'order', 'title', 'uri'];
+    protected $fillable = ['parent_id','menu_id', 'order', 'title', 'uri'];
+    public $timestamps = false;
 
     /**
      * Create a new Eloquent model instance.
@@ -46,23 +47,6 @@ class Menu extends Model
         $this->setOrderColumn('order');
     }
 
-    /**
-     * A Menu belongs to many roles.
-     *
-     * @return BelongsToMany
-     */
-
-
-    /**
-     * @return array
-     */
-    public function allNodes()
-    {
-        $orderColumn = DB::getQueryGrammar()->wrap($this->orderColumn);
-        $byOrder = $orderColumn.' = 0,'.$orderColumn;
-
-        return static::orderByRaw($byOrder)->get()->toArray();
-    }
 
     /**
      * Detach models from the relationship.
