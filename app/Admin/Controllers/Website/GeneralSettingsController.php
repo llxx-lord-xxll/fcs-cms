@@ -44,22 +44,6 @@ class GeneralSettingsController extends Controller
             if (request($item->meta_key) !=null)
             {
                 $val =  request($item->meta_key);
-                switch ($item->type)
-                {
-                    case 'image':
-                        if (request()->file($item->meta_key) !=null)
-                        {
-                            $f = request()->file($item->meta_key);
-                            $fname = $f->getClientOriginalName(). uniqid(). "." .$f->guessClientExtension();
-                            $f->move(Storage::disk('site_upload')->path('images/'),$fname);
-                            $val = 'images/' . $fname;
-                        }
-                        break;
-                    default:
-
-                        break;
-                }
-
                 SiteSettings::find($item->id)->update(['meta_value'=>$val]);
             }
         }

@@ -6,7 +6,7 @@
 
         @include('admin::form.error')
 
-        <input class="form-control {{$class}}" id="{{$id}}" name="{{$name}}"  type="text" readonly="readonly" placeholder="Click here and select a file double clicking on it" style="width:600px;cursor:pointer" />
+        <input class="form-control {{$class}}" id="{{$id}}" name="{{$name}}" {!! $attributes !!} type="text" value="{{ old($column, $value) }}" readonly="readonly" placeholder="Click here and select a file double clicking on it" style="width:600px;cursor:pointer" />
 
         @include('admin::form.help-block')
 
