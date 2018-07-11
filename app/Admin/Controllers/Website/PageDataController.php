@@ -172,6 +172,9 @@ class PageDataController extends Controller
                     case 'html':
                         $form->aceditor('meta_value',SiteTemplatesMeta::find($data)->title);
                         break;
+                    case 'vhtml':
+                        $form->ckeditor('meta_value',SiteTemplatesMeta::find($data)->title);
+                        break;
                     case 'textarea':
                         $form->textarea('meta_value',SiteTemplatesMeta::find($data)->title);
                         break;
