@@ -87,7 +87,10 @@ class ContactFormController extends Controller
                     return $name;
                 }
             });
-            $grid->columns(array('email'=>'Email','country'=>'From','mob'=>'Mobile','message'=>'Message'));
+            $grid->columns(array('email'=>'Email','mob'=>'Mobile','message'=>'Message'));
+            $grid->column('country','From')->display(function ($from){
+                return ucfirst($from);
+            });
             $grid->column('created_at','Time')->sortable();
             $grid->actions(function (Grid\Displayers\Actions $actions)
             {
