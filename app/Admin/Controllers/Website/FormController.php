@@ -89,7 +89,7 @@ class FormController extends Controller
     {
         return Admin::form(SiteForms::class, function (Form $form) {
 
-            $form->tab('Form Setup',function ($form)
+            $form->tab('Form Setup',function (Form $form)
             {
                 $form->text('title');
                 $form->text('table_name');
@@ -97,56 +97,97 @@ class FormController extends Controller
                 $form->aceditor('agreement_html','Agreement');
             });
 
-            $form->tab('Form Field Setup',function ($form)
+            if(request()->route()->getName() != 'forms.create')
             {
-                $form->hasMany('entries', function (Form\NestedForm $form) {
-                    $form->select('field_name')->rules('required')->options(function ($id)
-                    {
-                        return SiteForms::list_fields($this->table_name);
+                $form_row = null;
+                if(request()->route()->parameter('form') != null)
+                {
+                    $form_row = SiteForms::find(request()->route()->parameter('form'));
+                }
+
+                $form->tab('Form Field Setup',function ($form) use ($form_row)
+                {
+
+                    $form->hasMany('entries', function (Form\NestedForm $form) use ($form_row){
+                        if ($form_row->table_name !=null)
+                        {
+                            $form->select('field_name')->rules('required')->options(function ($id)
+                            {
+                                return SiteForms::list_fields($this->table_name);
+                            });
+                        }
+                        else
+                        {
+                            $form->text('field_name')->rules('required');
+                        }
+
+
+                        $form->text('field_title');
+                        $form->textarea('field_rules');
+                        $form->textarea('field_instructions');
+                        $form->textarea('field_ivals','Initial Values');
+                        $form->select('field_type')->options(array('text'=>"Text",'email'=>'Email','tel'=>'Telephone','url'=>'URL','file'=>'File Upload','textarea'=>"Text Area",'radiobutton'=>"Radio Buttons","checkbox"=>"Checkbox","select"=>"Select"))->rules('required');
+                        $form->textarea('field_placeholder');
                     });
-                    $form->text('field_title')->rules('required');
-                    $form->textarea('field_rules');
-                    $form->textarea('field_instructions');
-                    $form->textarea('field_ivals','Initial Values');
-                    $form->select('field_type')->options(array('text'=>"Text",'email'=>'Email','tel'=>'Telephone','url'=>'URL','file'=>'File Upload','textarea'=>"Text Area",'radiobutton'=>"Radio Buttons","checkbox"=>"Checkbox","select"=>"Select"))->rules('required');
-                    $form->textarea('field_placeholder');
                 });
-            });
-            $form->tab('Newsletter',function ($form)
-            {
-                $form->switch('newsletter','Enable?');
-                $form->hasMany('newslettersub', 'Shared Fields', function (Form\NestedForm $form) {
-                    $form->text('list_field_name');
-                    $form->select('form_field_name')->rules('required')->options(function ($id)
-                    {
-                        return SiteForms::list_fields($this->table_name);
+                $form->tab('Newsletter',function ($form) use ($form_row)
+                {
+                    $form->switch('newsletter','Enable?');
+                    $form->hasMany('newslettersub', 'Shared Fields', function (Form\NestedForm $form) use ($form_row){
+                        $form->text('list_field_name');
+                        if ($form_row->table_name !=null)
+                        {
+                            $form->select('form_field_name')->rules('required')->options(function ($id)
+                            {
+                                return SiteForms::list_fields($this->table_name);
+                            });
+                        }
+                        else
+                        {
+                            $form->text('form_field_name')->rules('required');
+                        }
+
+
+                        $form->hidden('subscription_type')->value('newsletter');
                     });
-                    $form->hidden('subscription_type')->value('newsletter');
+
                 });
 
-            });
+
+                $form->tab('Mailchimp Contact',function ($form) use ($form_row)
+                {
+                    $form->switch('subscribers','Enable?');
+                    $form->text('subscribers_confname','Mailchimp List');
+                    $form->hasMany('subscriptions', 'Shared Fields', function (Form\NestedForm $form) use ($form_row){
+                        $form->text('list_field_name');
+                        if ($form_row->table_name !=null)
+                        {
+                            $form->select('form_field_name')->rules('required')->options(function ($id)
+                            {
+                                return SiteForms::list_fields($this->table_name);
+                            });
+                        }
+                        else
+                        {
+                            $form->text('form_field_name')->rules('required');
+                        }
 
 
-            $form->tab('Mailchimp Contact',function ($form)
-            {
-                $form->switch('subscribers','Enable?');
-                $form->text('subscribers_confname','Mailchimp List');
-                $form->hasMany('subscriptions', 'Shared Fields', function (Form\NestedForm $form) {
-                    $form->text('list_field_name');
-                    $form->select('form_field_name')->rules('required')->options(function ($id)
-                    {
-                        return SiteForms::list_fields($this->table_name);
+                        $form->hidden('subscription_type')->value('subscription');
                     });
-                    $form->hidden('subscription_type')->value('subscription');
+
                 });
-
-            });
-
-            $form->saving(function ($form)
+            }
+                $form->saving(function ($form)
+                {
+                    $form->newsletter =  $form->newsletter=="off"?'0':'1';
+                    $form->subscriber =  $form->subscriber=="off"?'0':'1';
+                });
+            $form->saved(function ($form)
             {
-                $form->newsletter =  $form->newsletter=="off"?'0':'1';
-                $form->subscriber =  $form->subscriber=="off"?'0':'1';
+                return redirect()->route('forms.edit',['form'=>$form->model()->id]);
             });
+
 
         /*    $form->tab('Confirmation Email',function (Form $form)
             {

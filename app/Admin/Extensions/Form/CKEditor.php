@@ -23,6 +23,7 @@ class CKEditor extends Field
     {
         //$this->script = " var editor = $('textarea.{$this->getElementClassString()}').ckeditor(); CKFinder.setupCKEditor( editor );";
         $this->script = "var editor = CKEDITOR.replace( '{$this->getElementClassString()}', {
+        extraAllowedContent : 'section(*)[*]{*}',
     filebrowserBrowseUrl : '".asset('packages/kcfinder/browse.php?opener=ckeditor&type=files')."',
     filebrowserImageBrowseUrl : '".asset('packages/kcfinder/browse.php?opener=ckeditor&type=images')."',
     filebrowserFlashBrowseUrl : '".asset('packages/kcfinder/browse.php?opener=ckeditor&type=flash')."',

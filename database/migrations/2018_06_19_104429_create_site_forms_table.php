@@ -16,12 +16,12 @@ class CreateSiteFormsTable extends Migration
         Schema::create('site_forms', function (Blueprint $table) {
             $table->increments('id');
             $table->string('title');
-            $table->string('table_name');
+            $table->string('table_name')->nullable();
             $table->string('submit_button');
-            $table->string('agreement_html');
-            $table->string('subscribers', [0, 1]);
-            $table->string('subscribers_confname');
-            $table->string('newsletter', [0, 1]);
+            $table->string('agreement_html')->nullable();
+            $table->string('subscribers', 1);
+            $table->string('subscribers_confname')->nullable();
+            $table->string('newsletter', 1);
         });
     }
 

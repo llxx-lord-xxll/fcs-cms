@@ -17,7 +17,7 @@ class CreateSiteFormEntriesTable extends Migration
             $table->increments('id');
             $table->bigInteger('form_id');
             $table->string('field_name');
-            $table->text('field_title');
+            $table->text('field_title')->nullable();
             $table->string('field_rules')->nullable();
             $table->text('field_instructions')->nullable();
             $table->string('field_type');
