@@ -90,6 +90,10 @@ Route::group([
         $router->resource('/category', 'Website\BlogCategoryController',['as'=>'post']);
     });
 
+
+        $router->resource('/slider', 'Website\SliderController',['name'=>'slider']);
+        $router->resource('/slider/{slide}/meta', 'Website\SiteSliderMetaController',['as'=>'slider']);
+
     $router->resource('/settings/general', 'Website\GeneralSettingsController',['as'=>'settings','only'=>['index','update']]);
     $router->resource('/timeline', 'Website\TimelineController');
     $router->resource('/forms', 'Website\FormController');

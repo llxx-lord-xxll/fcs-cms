@@ -9,6 +9,7 @@ use App\Admin\Databases\Website\SitePackageGroup;
 use App\Admin\Databases\Website\SitePages;
 use App\Admin\Databases\Website\SitePagesMeta;
 
+use App\Admin\Databases\Website\SiteSlider;
 use App\Admin\Databases\Website\SiteTeams;
 use App\Admin\Databases\Website\SiteTemplatesMeta;
 use App\Admin\Databases\Website\Widgets;
@@ -213,6 +214,10 @@ class PageDataController extends Controller
                         break;
                     case 'forms':
                         $form->select('meta_value','Select Team to display people')->options(SiteForms::allNodes());
+                        break;
+                    case 'slider':
+                    case 'venue_slider':
+                        $form->select('meta_value','Select Slider to display')->options(SiteSlider::allNodes());
                         break;
                     case  'accordion_faq':
                         $form->aceditor('meta_value','List of accordions');
