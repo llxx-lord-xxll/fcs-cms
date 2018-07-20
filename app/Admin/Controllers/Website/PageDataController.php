@@ -225,6 +225,9 @@ class PageDataController extends Controller
                     case 'i':
                         $form->icon('meta_value','Select Icon');
                         break;
+                    case 'delegate_handbook':
+                        $form->aceditor('meta_value','Structural Values');
+                        break;
                     default:
                         $form->html('<p class="form-control text-warning">Nothing to edit</p>');
                         break;
