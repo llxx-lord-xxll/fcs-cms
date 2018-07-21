@@ -217,6 +217,7 @@ class PageDataController extends Controller
                         break;
                     case 'slider':
                     case 'venue_slider':
+                    case 'img_slider':
                         $form->select('meta_value','Select Slider to display')->options(SiteSlider::allNodes());
                         break;
                     case  'accordion_faq':
