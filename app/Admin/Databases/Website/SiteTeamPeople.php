@@ -10,4 +10,16 @@ class SiteTeamPeople extends Model
 
     public $timestamps = false;
 
+    public static function allNodes()
+    {
+        $ret = array();
+
+        foreach (SiteTeamPeople::get() as $item)
+        {
+            $ret[$item->id] = $item->name;
+        }
+
+        return $ret;
+    }
+
 }

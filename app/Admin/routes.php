@@ -91,8 +91,11 @@ Route::group([
     });
 
 
-        $router->resource('/slider', 'Website\SliderController',['name'=>'slider']);
-        $router->resource('/slider/{slide}/meta', 'Website\SiteSliderMetaController',['as'=>'slider']);
+    $router->resource('/slider', 'Website\SliderController',['name'=>'slider']);
+    $router->resource('/slider/{slide}/meta', 'Website\SiteSliderMetaController',['as'=>'slider']);
+
+    $router->resource('/schedules', 'Website\ScheduleController',['name'=>'schedule']);
+    $router->resource('/schedules/{schedule}/meta', 'Website\ScheduleMetaController',['as'=>'schedule']);
 
     $router->resource('/settings/general', 'Website\GeneralSettingsController',['as'=>'settings','only'=>['index','update']]);
     $router->resource('/timeline', 'Website\TimelineController');
