@@ -15,7 +15,7 @@ class HomeController extends Controller
     {
         $v = null;
 
-        if(Admin::user()->isRole('administrator'))
+        if(Admin::user()->isRole('developer'))
         {
             $v = Admin::content(function (Content $content) {
 

@@ -10,6 +10,7 @@ use Encore\Admin\Form;
 use Encore\Admin\Grid;
 use Encore\Admin\Layout\Content;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\MessageBag;
 
 class UserController extends Controller
 {
@@ -97,17 +98,23 @@ class UserController extends Controller
     {
         return Administrator::form(function (Form $form) {
             $form->display('id', 'ID');
-
             $form->text('username', trans('admin.username'))->rules('required');
             $form->text('name', trans('admin.name'))->rules('required');
             $form->image('avatar', trans('admin.avatar'));
-            $form->password('password', trans('admin.password'))->rules('required|confirmed');
-            $form->password('password_confirmation', trans('admin.password_confirmation'))->rules('required')
-                ->default(function ($form) {
-                    return $form->model()->password;
-                });
+            $form->password('password', trans('admin.password'))->attribute('value','');
+            $form->password('password_confirmation', trans('admin.password_confirmation'))->attribute('value','')->rules(function ($form)
+            {
+                if ($form->password)
+                {
+                    return 'required';
+                }
+                else
+                {
+                    return 'nullable';
+                }
+            });
 
-            $form->ignore(['password_confirmation']);
+            $form->ignore('password_confirmation');
 
             $form->multipleSelect('roles', trans('admin.roles'))->options(Role::all()->pluck('name', 'id'));
             $form->multipleSelect('permissions', trans('admin.permissions'))->options(Permission::all()->pluck('name', 'id'));
@@ -116,9 +123,27 @@ class UserController extends Controller
             $form->display('updated_at', trans('admin.updated_at'));
 
             $form->saving(function (Form $form) {
-                if ($form->password && $form->model()->password != $form->password) {
+
+                $cpass = request('password_confirmation');
+
+                if ($form->password && ($form->password == $cpass)) {
                     $form->password = bcrypt($form->password);
                 }
+                elseif($form->password  && ($form->password != $cpass) )
+                {
+                    $error = new MessageBag([
+                        'title'   => 'Failed to change password ',
+                        'message' => 'Password & confirm password didn\'t Match',
+                    ]);
+
+                    $form->password = $form->model()->password;
+                    return back()->with(compact('error'));
+                }
+                else
+                {
+                    $form->password = $form->model()->password;
+                }
+
             });
         });
     }
