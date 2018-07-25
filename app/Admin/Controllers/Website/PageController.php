@@ -89,6 +89,12 @@ class PageController extends Controller
     protected function grid()
     {
         return Admin::grid(SitePages::class, function (Grid $grid) {
+
+            $states = [
+                '1'  => ['value' => 1, 'text' => 'YES', 'color' => 'primary'],
+                '0' => ['value' => 0, 'text' => 'NO', 'color' => 'default'],
+            ];
+
             $grid->id('ID')->sortable();
             $grid->column('title');
             $grid->column('template_id','Template')->display(function ($template)
@@ -97,15 +103,17 @@ class PageController extends Controller
             });
 
             $grid->column('slug');
-            $grid->column('permalink');
+            $grid->column('permalink')->display(function ($permalink){
+                return  "<a href='" . env('SITE_URL') . $permalink . "'>".  $permalink . "</a>" ;
+            });
             $grid->column('author')->display(function ($author)
             {
                 return Administrator::find($author)->name;
             });
-
-            $grid->created_at()->display(function ($updated_At){
-                return Carbon::parse($updated_At)->format("d M, Y");
-            });
+            $grid->column('visibility')->select([
+                0 => 'Hidden',
+                1 => 'Visible',
+            ]);
             $grid->updated_at()->display(function ($updated_at){
                 return Carbon::parse($updated_at)->format("d M, Y");
             });
@@ -138,6 +146,10 @@ class PageController extends Controller
             $form->hidden('author');
             $form->display('created_at', 'Created At');
             $form->display('updated_at', 'Updated At');
+            $form->switch('visibility',"Visible?")->states([
+                '1'  => ['value' => 1, 'text' => 'YES', 'color' => 'primary'],
+                '0' => ['value' => 0, 'text' => 'NO', 'color' => 'default'],
+            ]);
 
             $form->aceditor('page_data')->default(function (Form $form)
             {
@@ -183,8 +195,10 @@ class PageController extends Controller
                     }
 
                 }
-                    Storage::disk("site_pages")->put($form->model()->slug.".blade.php",request('page_data'));
 
+                if (request('page_data')){
+                    Storage::disk("site_pages")->put($form->model()->slug.".blade.php",request('page_data'));
+                }
             });
 
         });

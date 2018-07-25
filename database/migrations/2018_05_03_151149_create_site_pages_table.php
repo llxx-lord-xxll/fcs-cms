@@ -20,6 +20,7 @@ class CreateSitePagesTable extends Migration
             $table->integer('template_id');
             $table->string('permalink');
             $table->string('author');
+            $table->string('subscribers', 1)->default(1);
             $table->timestamps();
         });
     }
