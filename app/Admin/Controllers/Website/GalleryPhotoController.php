@@ -95,7 +95,6 @@ class GalleryPhotoController extends Controller
             $grid->column('caption');
             $grid->column('image')->display(function ($image)
             {
-                $image = Storage::disk('site_upload')->url($image);
                 return "<img src='$image' height='50' width='50'/>";
             });
 
@@ -130,7 +129,7 @@ class GalleryPhotoController extends Controller
     {
         return Admin::form(SiteGalleryPhotos::class, function (Form $form) {
             $form->text('caption');
-            $form->image('image')->uniqueName();
+            $form->kcimage('image');
             $form->number('height')->default(151);
             $form->number('width')->default(240);
             $form->multipleSelect('albums')->options(SiteGalleryAlbums::allNodes())->value(SiteGalleryPhotoMeta::getAlbums($this->pid));
