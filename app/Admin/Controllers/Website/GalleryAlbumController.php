@@ -124,8 +124,14 @@ class GalleryAlbumController extends Controller
             $form->text('title');
 
             $form->multipleSelect('gallery')->options(SiteGallery::allNodes())->value(SiteGalleryAlbumMeta::getGalleries($this->pid));
-            $form->ignore('gallery');
+            $form->hidden('slug');
+            $form->ignore(['slug','gallery']);
 
+
+            $form->saving(function (Form $form)
+            {
+                $form->slug = str_slug($form->title,'_');
+            });
             $form->saved(function (Form $form)
             {
                 SiteGalleryAlbumMeta::where('album_id','=',$form->model()->id)->delete();

@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\DB;
 class SiteGalleryAlbums extends Model
 {
     protected $table = 'site_gallery_albums';
-
+    protected $fillable = array('title','slug');
     protected $casts = ['albums'=>'array'];
 
     public $timestamps = false;
