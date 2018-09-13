@@ -13,7 +13,7 @@ class CreateSiteFormEntriesTable extends Migration
      */
     public function up()
     {
-        Schema::create('site_form_entries', function (Blueprint $table) {
+        Schema::create('site_form_fields', function (Blueprint $table) {
             $table->increments('id');
             $table->bigInteger('form_id');
             $table->string('field_name');
@@ -34,6 +34,6 @@ class CreateSiteFormEntriesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('site_form_entries');
+        Schema::dropIfExists('site_form_fields');
     }
 }

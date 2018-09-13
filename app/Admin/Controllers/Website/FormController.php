@@ -10,6 +10,7 @@ use Encore\Admin\Facades\Admin;
 use Encore\Admin\Layout\Content;
 use App\Http\Controllers\Controller;
 use Encore\Admin\Controllers\ModelForm;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Request;
 
 class FormController extends Controller
@@ -74,7 +75,17 @@ class FormController extends Controller
     {
         return Admin::grid(SiteForms::class, function (Grid $grid) {
 
-            $grid->columns('title','table_name');
+            $grid->columns('title','slug');
+            $grid->column('submissions')->display(function ($col)
+            {
+                return DB::table('site_forms_submissioon')->where('form_id','=',$this->id)->count();
+            });
+
+            $grid->actions(function (Grid\Displayers\Actions $actions)
+            {
+                $actions->prepend('<a href="'.route('submissions.index',['contact'=>$actions->getKey()]).'"><i class="fa fa-book"></i></a>');
+            });
+
 
         });
     }
@@ -92,7 +103,7 @@ class FormController extends Controller
             $form->tab('Form Setup',function (Form $form)
             {
                 $form->text('title');
-                $form->text('table_name');
+                $form->display('slug');
                 $form->text('submit_button','Submit Button')->default('Submit');
                 $form->aceditor('agreement_html','Agreement');
             });
@@ -109,19 +120,7 @@ class FormController extends Controller
                 {
 
                     $form->hasMany('entries', function (Form\NestedForm $form) use ($form_row){
-                        if ($form_row->table_name !=null)
-                        {
-                            $form->select('field_name')->rules('required')->options(function ($id)
-                            {
-                                return SiteForms::list_fields($this->table_name);
-                            });
-                        }
-                        else
-                        {
-                            $form->text('field_name')->rules('required');
-                        }
-
-
+                        $form->text('field_name')->rules('required');
                         $form->text('field_title');
                         $form->textarea('field_rules');
                         $form->textarea('field_instructions');
@@ -177,11 +176,18 @@ class FormController extends Controller
                     });
 
                 });
+
+                $form->tab('Payment',function (Form $form) use ($form_row)
+                {
+                    $form->switch('payment','Enable?');
+                    $form->currency('payment_charge','Charge')->help("Leave this field 0.00 to enable packages");
+                });
             }
                 $form->saving(function ($form)
                 {
                     $form->newsletter =  $form->newsletter=="off"?'0':'1';
                     $form->subscriber =  $form->subscriber=="off"?'0':'1';
+                    $form->payment =  $form->payment=="off"?'0':'1';
                 });
             $form->saved(function ($form)
             {
