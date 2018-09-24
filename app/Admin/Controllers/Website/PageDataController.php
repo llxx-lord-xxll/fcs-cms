@@ -203,7 +203,8 @@ class PageDataController extends Controller
                     case 'pricing_table':
                         $form->select('meta_value','Select Package Group')->options(SitePackageGroup::getAllPackageGroups());
                         break;
-                    case 'gallery':
+                    case 'gallery1':
+                    case 'gallery2':
                         $form->select('meta_value','Select Gallery')->options(SiteGallery::allNodes());
                         break;
                     case 'a':
