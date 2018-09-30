@@ -184,7 +184,27 @@ class PageController extends Controller
 
                     return $page_data;
                 }
-                return '';
+                return '@extends($template)
+
+                                    @section(\'header-extra\')
+                                    
+                                    @endsection
+                                    
+                                    @section(\'title\')
+                                        {{$page_title}}
+                                    @endsection
+                                    
+                                    
+                                    @section(\'page-content\')
+                                    
+                                        {!! $data !!}
+                                    
+                                    @endsection
+                                    
+                                    @section(\'scripts\')
+                                    
+                                    @endsection
+                                    ';
             });
             $form->ignore('page_data');
             $form->saving(function (Form $form) {
