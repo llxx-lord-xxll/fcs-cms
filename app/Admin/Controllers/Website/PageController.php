@@ -159,52 +159,52 @@ class PageController extends Controller
 
                     if (empty($page_data))
                     {
-                        $page_data = '@extends($template)
-
-                                    @section(\'header-extra\')
-                                    
-                                    @endsection
-                                    
-                                    @section(\'title\')
-                                        {{$page_title}}
-                                    @endsection
-                                    
-                                    
-                                    @section(\'page-content\')
-                                    
-                                        {!! $data !!}
-                                    
-                                    @endsection
-                                    
-                                    @section(\'scripts\')
-                                    
-                                    @endsection
-                                    ';
+                        $page_data = '
+                            @extends($template)
+                
+                            @section(\'header-extra\')
+                                        
+                            @endsection
+                                        
+                            @section(\'title\')
+                               {{$page_title}}
+                             @endsection
+                                        
+                                        
+                            @section(\'page-content\')
+                                        
+                                {!! $data !!}
+                                        
+                            @endsection
+                                        
+                            @section(\'scripts\')
+                                        
+                            @endsection';
                     }
 
                     return $page_data;
                 }
-                return '@extends($template)
-
-                                    @section(\'header-extra\')
-                                    
-                                    @endsection
-                                    
-                                    @section(\'title\')
-                                        {{$page_title}}
-                                    @endsection
-                                    
-                                    
-                                    @section(\'page-content\')
-                                    
-                                        {!! $data !!}
-                                    
-                                    @endsection
-                                    
-                                    @section(\'scripts\')
-                                    
-                                    @endsection
-                                    ';
+                    return '
+                            @extends($template)
+                
+                            @section(\'header-extra\')
+                                        
+                            @endsection
+                                        
+                            @section(\'title\')
+                               {{$page_title}}
+                             @endsection
+                                        
+                                        
+                            @section(\'page-content\')
+                                        
+                                {!! $data !!}
+                                        
+                            @endsection
+                                        
+                            @section(\'scripts\')
+                                        
+                            @endsection';
             });
             $form->ignore('page_data');
             $form->saving(function (Form $form) {
