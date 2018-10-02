@@ -391,13 +391,13 @@ class TeamPeopleController extends Controller
                 'ZW' => 'Zimbabwe',);
             $form->image('photo')->rules('required');
             $form->text('name')->placeholder('John dev')->rules('required');
-            $form->mobile('phone')->options(['mask' => '+99 999 9999 9999'])->rules('required');
-            $form->email('email')->placeholder('example@example.com')->rules('required');
+            $form->mobile('phone')->options(['mask' => '+99 999 9999 9999']);
+            $form->email('email')->placeholder('example@example.com');
             $form->multipleSelect('teams')->options(SiteTeams::allNodes())->value(SiteTeamsMeta::getTeam($this->pid));
             $form->ignore('teams');
-            $form->text('city')->rules('required');
+            $form->text('city');
             $form->select('country')->options($countries)->rules('required');
-            $form->date('dob')->rules('required');
+            $form->date('dob');
             $form->text('profession')->rules('required');
             $form->divider();
             $form->text('fb','Facebook');
