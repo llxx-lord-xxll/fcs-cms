@@ -392,7 +392,7 @@ class TeamPeopleController extends Controller
             $form->image('photo')->rules('required');
             $form->text('name')->placeholder('John dev')->rules('required');
             $form->mobile('phone')->options(['mask' => '+99 999 9999 9999']);
-            $form->email('email')->placeholder('example@example.com');
+            $form->email('email')->placeholder('example@example.com')->rules('nullable');
             $form->multipleSelect('teams')->options(SiteTeams::allNodes())->value(SiteTeamsMeta::getTeam($this->pid));
             $form->ignore('teams');
             $form->text('city');
