@@ -122,7 +122,7 @@ class GalleryAlbumController extends Controller
     {
         return Admin::form(SiteGalleryAlbums::class, function (Form $form) {
             $form->text('title');
-
+            $form->textarea('description')->help("Supports html");
             $form->multipleSelect('gallery')->options(SiteGallery::allNodes())->value(SiteGalleryAlbumMeta::getGalleries($this->pid));
             $form->hidden('slug');
             $form->ignore(['slug','gallery']);

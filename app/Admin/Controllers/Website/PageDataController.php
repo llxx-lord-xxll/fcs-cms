@@ -205,6 +205,7 @@ class PageDataController extends Controller
                         break;
                     case 'gallery1':
                     case 'gallery2':
+                    case 'gallery3':
                         $form->select('meta_value','Select Gallery')->options(SiteGallery::allNodes());
                         break;
                     case 'a':

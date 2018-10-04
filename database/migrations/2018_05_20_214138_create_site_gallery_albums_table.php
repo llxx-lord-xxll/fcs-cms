@@ -17,6 +17,7 @@ class CreateSiteGalleryAlbumsTable extends Migration
             $table->increments('id');
             $table->string('title');
             $table->string('slug')->unique();
+            $table->string('description',512);
         });
     }
 
