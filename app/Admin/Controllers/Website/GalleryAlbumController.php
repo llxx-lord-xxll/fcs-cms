@@ -6,6 +6,7 @@ use App\Admin\Databases\Website\SiteGallery;
 use App\Admin\Databases\Website\SiteGalleryAlbums;
 
 use App\Admin\Databases\Website\SiteGalleryAlbumMeta;
+use App\Admin\Databases\Website\SiteGalleryPhotoMeta;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
 use Encore\Admin\Facades\Admin;
@@ -37,9 +38,21 @@ class GalleryAlbumController extends Controller
                 $row->column(6,$this->grid());
                 $row->column(6,$this->form()->setAction(route('albums.store')));
             });
-
-
         });
+    }
+
+    public function destroy($id)
+    {
+        try{
+            SiteGalleryAlbumMeta::where('album_id','=',$id)->delete();
+            SiteGalleryPhotoMeta::where('album_id','=',$id)->delete();
+            SiteGalleryAlbums::find($id)->delete();
+        }
+        catch (\Exception $exception)
+        {
+            return response(json_encode(['status'=>false,'message'=>"Delete failed !"]))->header('Content-Type', 'application/json');
+        }
+        return response(json_encode(['status'=>true,'message'=>"Delete succeeded !"]))->header('Content-Type', 'application/json');
     }
 
     /**

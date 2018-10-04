@@ -43,6 +43,20 @@ class GalleryPhotoController extends Controller
         });
     }
 
+    public function destroy($id)
+    {
+        try{
+            SiteGalleryPhotoMeta::where('photo_id','=',$id)->delete();
+            SiteGalleryPhotos::find($id)->delete();
+
+        }
+        catch (\Exception $exception)
+        {
+            return response(json_encode(['status'=>false,'message'=>"Delete failed !"]))->header('Content-Type', 'application/json');
+        }
+        return response(json_encode(['status'=>true,'message'=>"Delete succeeded !"]))->header('Content-Type', 'application/json');
+    }
+
     /**
      * Edit interface.
      *
