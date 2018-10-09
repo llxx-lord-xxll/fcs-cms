@@ -1,4 +1,4 @@
-﻿/**
+﻿﻿/**
  * @license Copyright (c) 2003-2018, CKSource - Frederico Knabben. All rights reserved.
  * For licensing, see LICENSE.md or http://ckeditor.com/license
  */
@@ -13,10 +13,10 @@
  * (1) http://ckeditor.com/builder
  *     Visit online builder to build CKEditor from scratch.
  *
- * (2) http://ckeditor.com/builder/5cae8c01d65f1db76d08082d1b9f9945
+ * (2) http://ckeditor.com/builder/ba0ac86d64c28ae0439f9f4c01109673
  *     Visit online builder to build CKEditor, starting with the same setup as before.
  *
- * (3) http://ckeditor.com/builder/download/5cae8c01d65f1db76d08082d1b9f9945
+ * (3) http://ckeditor.com/builder/download/ba0ac86d64c28ae0439f9f4c01109673
  *     Straight download link to the latest version of CKEditor (Optimized) with the same setup as before.
  *
  * NOTE:
@@ -38,7 +38,6 @@ var CKBUILDER_CONFIG = {
 		'.jshintignore',
 		'.jshintrc',
 		'.mailmap',
-		'.npm',
 		'.travis.yml',
 		'bender-err.log',
 		'bender-out.log',
@@ -78,8 +77,6 @@ var CKBUILDER_CONFIG = {
 		'format' : 1,
 		'horizontalrule' : 1,
 		'htmlwriter' : 1,
-		'iframe' : 0,
-		'iframedialog' : 0,
 		'image' : 1,
 		'indentblock' : 1,
 		'indentlist' : 1,
@@ -117,8 +114,7 @@ var CKBUILDER_CONFIG = {
 		'toolbar' : 1,
 		'undo' : 1,
 		'uploadimage' : 1,
-		'wsc' : 1,
-		'wysiwygarea' : 1
+		'wsc' : 1
 	},
 	languages : {
 		'en' : 1
