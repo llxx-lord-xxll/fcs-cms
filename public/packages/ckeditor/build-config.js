@@ -55,7 +55,7 @@ var CKBUILDER_CONFIG = {
 		'basicstyles' : 1,
 		'bidi' : 1,
 		'blockquote' : 1,
-		'ckeditor_fa' : 1,
+		'ckeditor_fa' : 0,
 		'clipboard' : 1,
 		'colorbutton' : 1,
 		'colordialog' : 1,
