@@ -8,6 +8,9 @@ use Illuminate\Support\Facades\DB;
 class SiteForms extends Model
 {
     protected $table = 'site_forms';
+    protected $casts = [
+        'package_groups' => 'json'
+    ];
 
     public $timestamps = false;
 

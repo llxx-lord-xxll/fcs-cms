@@ -16,6 +16,8 @@ class CreatePaymentsOnForm extends Migration
         Schema::table('site_forms', function ($table) {
             $table->string('payment', 1)->default(0);
             $table->double('payment_charge')->nullable();
+            $table->json('package_groups')->nullable();
+
         });
     }
 
@@ -29,6 +31,7 @@ class CreatePaymentsOnForm extends Migration
         Schema::table('site_forms', function (Blueprint $table) {
             $table->dropColumn('payment');
             $table->dropColumn('payment_charge');
+            $table->dropColumn('package_groups');
         });
     }
 }

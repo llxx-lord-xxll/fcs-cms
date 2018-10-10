@@ -4,6 +4,7 @@ namespace App\Admin\Controllers\Website;
 
 use App\Admin\Databases\Website\SiteForms;
 
+use App\Admin\Databases\Website\SitePackageGroup;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
 use Encore\Admin\Facades\Admin;
@@ -181,6 +182,9 @@ class FormController extends Controller
                 {
                     $form->switch('payment','Enable?');
                     $form->currency('payment_charge','Charge')->help("Leave this field 0.00 to enable packages");
+                    $form->multipleSelect('package_groups','Package Groups')->options(SitePackageGroup::getAllPackageGroups());
+                    //$form->ignore('package_groups');
+
                 });
             }
                 $form->saving(function ($form)
@@ -188,6 +192,16 @@ class FormController extends Controller
                     $form->newsletter =  $form->newsletter=="off"?'0':'1';
                     $form->subscriber =  $form->subscriber=="off"?'0':'1';
                     $form->payment =  $form->payment=="off"?'0':'1';
+
+                   /* $package_groups = $form->package_groups;
+                    array_pop($package_groups);
+
+                    if (!empty($package_groups))
+                    {
+                        $form->package_groups = json_encode($package_groups);
+                    }
+                   */
+
                 });
             $form->saved(function ($form)
             {
