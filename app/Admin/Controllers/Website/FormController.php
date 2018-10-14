@@ -104,7 +104,7 @@ class FormController extends Controller
             $form->tab('Form Setup',function (Form $form)
             {
                 $form->text('title');
-                $form->display('slug');
+                $form->text('slug');
                 $form->text('submit_button','Submit Button')->default('Submit');
                 $form->aceditor('agreement_html','Agreement');
             });
