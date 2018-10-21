@@ -50,19 +50,19 @@ return [
 
         'site_layout' => [
             'driver' => 'local',
-            'root' => env('SITE_ROOT').'\\resources\\views\\layouts',
+            'root' => env('SITE_ROOT').'/resources/views/layouts',
         ],
 
         'site_upload' => [
             'driver' => 'local',
-            'root' => env('SITE_ROOT').'\\public\\uploads',
+            'root' => env('SITE_ROOT').'/public/uploads',
             'visibility' => 'public',
             'url'=>env('SITE_URL').'/uploads',
         ],
 
         'site_pages' => [
             'driver' => 'local',
-            'root' => env('SITE_ROOT').'\\resources\\views',
+            'root' => env('SITE_ROOT').'/resources/views',
         ],
 
         'public' => [

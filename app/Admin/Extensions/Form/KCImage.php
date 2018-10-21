@@ -28,7 +28,7 @@ class KCImage extends Field
         $this->script = '$( "form" ).on( "click", ".'.$this->getElementClassString().'",function() {
   openKCFinder(this);
 });' . "   function openKCFinder(field) {
-            console.log(field);
+           // console.log(field);
     window.KCFinder = {
         callBack: function(url) {
             field.value = url;

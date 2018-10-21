@@ -229,7 +229,7 @@ class FormSubmissions extends Controller
                                            return $data->field_data;
                                            break;
                                        case 'file':
-                                           return "<a title='Click to download' href=''>Download</a>";
+                                           return "<a title='Click to download' TARGET='_blank' href='".str_replace("public",env("SITE_URL"),$data->field_data)."'>Download</a>";
                                            break;
                                        case 'email':
                                            return "<a title='Click to email' href='mailto:".$data->field_data."'>".$data->field_data."</a>";

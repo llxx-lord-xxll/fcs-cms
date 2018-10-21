@@ -17,9 +17,8 @@
    See http://kcfinder.sunhater.com/install for setting descriptions */
 
 
-
-require dirname($_SERVER['DOCUMENT_ROOT']) . '\vendor\autoload.php';
-$app = require_once dirname($_SERVER['DOCUMENT_ROOT']) . '\bootstrap\app.php';
+require dirname($_SERVER['DOCUMENT_ROOT']) . '/vendor/autoload.php';
+$app = require_once dirname($_SERVER['DOCUMENT_ROOT']) . '/bootstrap/app.php';
 $kernel = $app->make(Illuminate\Contracts\Http\Kernel::class);
 
 try
@@ -47,8 +46,8 @@ $_CONFIG = array(
 // GENERAL SETTINGS
 
     'disabled' => false,
-    'uploadURL' => "http://futurecitysummit.lc/uploads",
-    'uploadDir' => dirname(dirname($_SERVER['DOCUMENT_ROOT'])) . '\\fcs-web\\public\\uploads\\',
+    'uploadURL' => "https://futurecitysummit.org/uploads",
+    'uploadDir' => dirname(dirname($_SERVER['DOCUMENT_ROOT'])) . '/futurecitysummit.org/public/uploads/',
     'theme' => "default",
 
     'types' => array(
